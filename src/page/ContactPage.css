@@ -1,0 +1,207 @@
+/* ===================================================
+   CHARTE DE DESIGN AVANCÉE - FORMULAIRE MOAYE SERVICE
+   =================================================== */
+.moaye-contact-wrapper {
+  min-height: calc(100vh - 80px);
+  background-color: #fcfbfa !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4rem 2rem !important;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+}
+
+.moaye-contact-card {
+  background-color: #ffffff !important;
+  padding: 3.5rem 3rem !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px rgba(22, 51, 33, 0.04) !important;
+  width: 100% !important;
+  max-width: 720px !important;
+  text-align: left !important;
+  box-sizing: border-box;
+  position: relative;
+  border-top: 5px solid #7ba335 !important;
+}
+
+.moaye-back-link {
+  background: none !important;
+  border: none !important;
+  color: #7ba335 !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 2rem !important;
+  padding: 0 !important;
+  display: inline-block;
+}
+
+.moaye-contact-intro h2 {
+  color: #114314 !important;
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.5rem 0 !important;
+}
+
+.moaye-contact-intro p {
+  color: #556655 !important;
+  font-size: 0.98rem !important;
+  line-height: 1.6 !important;
+  margin-bottom: 2.5rem !important;
+  margin-top: 0 !important;
+}
+
+.moaye-structured-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.moaye-form-row {
+  display: flex !important;
+  gap: 1.5rem !important;
+  width: 100%;
+}
+
+.moaye-input-container {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+.moaye-input-container.full-width-field {
+  width: 100% !important;
+}
+
+.moaye-input-container label {
+  font-size: 0.88rem !important;
+  font-weight: 600 !important;
+  color: #163321 !important;
+  margin-bottom: 0.6rem !important;
+}
+
+.moaye-input-container input,
+.moaye-input-container textarea {
+  width: 100% !important;
+  padding: 14px 16px !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  font-size: 0.98rem !important;
+  color: #212121 !important;
+  background-color: #ffffff !important;
+  box-sizing: border-box;
+  outline: none !important;
+}
+
+.moaye-input-container input:focus,
+.moaye-input-container textarea:focus {
+  border-color: #7ba335 !important;
+}
+
+/* --- LE NOUVEAU SYSTÈME DE CARTES DE SÉLECTION (GRID SELECTOR) --- */
+.moaye-expertises-grid-selector {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important; /* 2 colonnes sur PC/iPad */
+  gap: 1rem !important;
+  width: 100% !important;
+  margin-top: 4px;
+}
+
+.moaye-select-option-card {
+  background-color: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  padding: 1.2rem !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  cursor: pointer !important;
+  transition: border-color 0.2s, background-color 0.2s !important;
+  box-sizing: border-box;
+}
+
+/* Effet au survol */
+.moaye-select-option-card:hover {
+  border-color: #7ba335 !important;
+  background-color: #fcfdfc !important;
+}
+
+/* STYLE QUAND LA CARTE EST SÉLECTIONNÉE PAR LE CLIENT */
+.moaye-select-option-card.is-selected {
+  border-color: #114314 !important; /* Bordure vert foncé de marque */
+  background-color: #e8f5e9 !important; /* Fond vert très clair fluide */
+}
+
+/* Le petit cercle à cocher */
+.moaye-card-radio-bullet {
+  width: 16px !important;
+  height: 16px !important;
+  border: 2px solid #cbd5e1 !important;
+  border-radius: 50% !important;
+  margin-top: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.moaye-select-option-card.is-selected .moaye-card-radio-bullet {
+  border-color: #114314 !important;
+}
+
+/* Le point vert au centre quand coché */
+.moaye-select-option-card.is-selected .moaye-card-radio-bullet::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 8px !important;
+  height: 8px !important;
+  background-color: #114314 !important;
+  border-radius: 50% !important;
+}
+
+.moaye-card-select-texts h4 {
+  font-size: 0.95rem !important;
+  color: #163321 !important;
+  font-weight: 700 !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.moaye-card-select-texts p {
+  font-size: 0.78rem !important;
+  color: #666666 !important;
+  margin: 0 !important;
+  line-height: 1.4 !important;
+}
+
+/* BOUTON D'ENVOI FINAL */
+.moaye-submit-project-btn {
+  width: 100% !important;
+  background-color: #114314 !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 16px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 1.05rem !important;
+  cursor: pointer;
+  margin-top: 0.5rem !important;
+}
+
+/* ===================================================
+   RESPONSIVE SMARTPHONE (REPLI EN 1 SEULE COLONNE)
+   =================================================== */
+@media (max-width: 768px) {
+  .moaye-contact-wrapper { padding: 2rem 1rem !important; }
+  .moaye-contact-card { padding: 2.5rem 1.5rem !important; }
+  .moaye-form-row { flex-direction: column !important; gap: 1.4rem !important; }
+  .moaye-contact-intro h2 { font-size: 1.8rem !important; }
+
+  /* Force les cartes d'expertises à s'empiler à la verticale sur téléphone */
+  .moaye-expertises-grid-selector {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+  }
+}

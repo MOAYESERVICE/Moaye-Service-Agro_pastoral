@@ -1,0 +1,1306 @@
+@import "tailwindcss";
+
+/* Réinitialisation de la page d'accueil */
+.home-page {
+  width: 100%;
+}
+
+
+/* ===================================================
+   STYLE DU BANDEAU DÉFILANT (MARQUEE INFINI)
+   =================================================== */
+.features-bar {
+  background-color: #f4f1ea; /* Couleur crème de la maquette */
+  padding: 1rem 0; /* Pas de padding sur les côtés pour laisser défiler libre */
+  border-top: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+  overflow: hidden; /* Masque tout ce qui dépasse à gauche et à droite */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.features-track {
+  display: flex;
+  width: max-content; /* Aligne le texte en une seule ligne horizontale géante */
+  gap: 4rem; /* Espace régulier entre chaque élément */
+  
+  /* Animation de défilement vers la gauche linéaire et infinie */
+  animation: scrollLeft 25s linear infinite;
+}
+
+.features-track span {
+  font-size: 0.85rem;
+  font-weight: bold;
+  color: #555555;
+  letter-spacing: 1px;
+  white-space: nowrap; /* Empêche tout retour à la ligne automatique */
+}
+
+/* Animation fluide de défilement vers la gauche */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Se décale exactement de la moitié pour boucler sans accroc */
+  }
+}
+
+
+/* ===================================================
+   ADAPTATION PORTABLE (RESPONSIVE MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+  
+  .hero-section {
+    flex-direction: column !important; 
+    padding: 3rem 6% 4rem 6% !important;
+    gap: 2rem !important;
+    min-height: auto !important;
+    
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.75) 100%), 
+                url('./assets/bg-hero.jpg') !important;
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  .hero-content {
+    width: 100%;
+    text-align: left;
+  }
+
+  .hero-tagline {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .hero-location {
+    margin-left: 0 !important;
+    display: inline-block;
+  }
+
+  .hero-content h1 {
+    font-size: 1.8rem !important;
+    line-height: 1.3 !important;
+    margin: 1.2rem 0 !important;
+  }
+
+  .hero-text {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .hero-image-container {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 1rem;
+    padding-bottom: 20px;
+  }
+
+  .hero-img {
+    max-width: 250px !important; 
+    border-radius: 16px !important;
+  }
+
+  .btn-whatsapp-hero {
+    display: block !important;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Ajustements du bandeau défilant sur mobile */
+  .features-bar {
+    padding: 1.2rem 0 !important;
+  }
+  
+  .features-track {
+    gap: 2.5rem !important;
+    animation: scrollLeft 18s linear infinite; /* Fait défiler un peu plus vite sur petit écran */
+  }
+
+  .features-track span {
+    font-size: 0.75rem !important;
+  }
+}
+
+
+/* ===================================================
+   GRILLE ET BLOCS DES DOMAINES D'INTERVENTION (CORRIGÉ V4)
+   =================================================== */
+
+@layer components {
+  /* Le fond crème de toute la section */
+  .services-section {
+    background-color: #f4f1ea !important;
+    padding: 5rem 10% !important;
+    width: 100% !important;
+    display: block !important;
+    box-sizing: border-box !important;
+  }
+
+  /* En-tête : Titre à gauche, Lien à droite */
+  .section-header {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 4rem !important;
+    width: 100% !important;
+  }
+
+  .header-left {
+    display: block !important;
+    text-align: left !important;
+  }
+
+  .services-section h2 {
+    font-size: 2.2rem !important;
+    font-weight: 700 !important;
+    color: #212121 !important;
+    margin: 0 !important;
+  }
+
+  /* Style pour l'introduction sous le titre */
+  .section-intro-text {
+    font-size: 1rem !important;
+    color: #555555 !important;
+    max-width: 500px !important;
+    margin-top: 0.5rem !important;
+    line-height: 1.5 !important;
+    display: block !important;
+    text-align: left !important;
+  }
+
+  .see-more-link {
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #1b5e20 !important; /* Vert Moaye */
+    text-decoration: none !important;
+    white-space: nowrap !important;
+  }
+
+  /* LA GRILLE : Aligne obligatoirement les 3 blocs horizontalement */
+  .services-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important; /* Force les 3 colonnes de la maquette */
+    gap: 2.5rem !important; /* Espace entre les cartes */
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Transformation des cartes en blocs cliquables */
+  .service-card {
+    display: block !important;
+    text-decoration: none !important; 
+    color: inherit !important;
+    text-align: left !important;
+  }
+
+  /* Cadre fixe qui donne sa taille physique aux images */
+  .service-img-container {
+    width: 100% !important;
+    height: 320px !important; /* Force la hauteur de l'image en ligne pour qu'elle apparaisse */
+    overflow: hidden !important;
+    border-radius: 24px !important; /* Coins arrondis lisses */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05) !important;
+    background-color: #eaeaea !important; /* Fond gris de secours */
+    display: block !important;
+  }
+
+  /* Forcer les images en Noir et Blanc (Grayscale) */
+  .bw-img {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+    object-fit: cover !important; /* Évite de déformer vos photos */
+    filter: grayscale(100%) !important; 
+    transition: filter 0.4s ease, transform 0.4s ease !important;
+  }
+
+  /* Effet interactif au survol de la souris */
+  .service-card:hover .bw-img {
+    filter: grayscale(0%) !important; /* L'image reprend ses couleurs d'origine */
+    transform: scale(1.04) !important; /* Léger effet de zoom dynamique */
+  }
+
+  /* Conteneur des textes de la carte */
+  .service-card-content {
+    display: block !important;
+    margin-top: 1.2rem !important;
+    text-align: left !important;
+  }
+
+  /* Le petit texte rouge au-dessus du titre de la carte */
+  .card-tag {
+    display: block !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: #c62828 !important; /* Rouge brique de vos étiquettes */
+    letter-spacing: 1px !important;
+    margin-bottom: 0.4rem !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Ajustement des titres et paragraphes */
+  .service-card-content h3 {
+    font-size: 1.4rem !important;
+    color: #212121 !important;
+    font-weight: 600 !important;
+    margin: 0 0 0.5rem 0 !important;
+    line-height: 1.3 !important;
+  }
+
+  .service-card-content p {
+    font-size: 0.95rem !important;
+    color: #666666 !important;
+    line-height: 1.6 !important;
+    margin: 0 !important;
+  }
+}
+
+/* ===================================================
+   ADAPTATION PORTABLE (RESPONSIVE SUR MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+  .section-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+  
+  .services-section {
+    padding: 3rem 6% !important;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr !important; /* Aligne tout en une colonne sur smartphone */
+    gap: 2rem !important;
+  }
+  
+  .service-img-container {
+    height: 240px !important; /* Hauteur ajustée pour écran de téléphone */
+  }
+}
+
+
+
+
+
+
+/* ===================================================
+   SECTION FERME DE PRODUITS FRAIS (STYLE MAQUETTE EN DAMIER)
+   =================================================== */
+.farm-presentation-section {
+  background-color: #ffffff !important;
+  padding: 6rem 12% !important;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.farm-center-header {
+  text-align: center !important;
+  margin-bottom: 5rem !important;
+}
+
+.farm-center-header h2 {
+  font-size: 2.3rem !important;
+  color: #163321 !important; /* Vert très sombre */
+  font-weight: 600 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Texte manuscrit ou italique élégant */
+.handwritten-green {
+  font-style: italic;
+  color: #8cb83e !important; /* Vert clair / jaune du modèle */
+  font-family: 'Georgia', serif;
+}
+
+.farm-big-intro {
+  font-size: 1.9rem !important;
+  color: #163321 !important;
+  line-height: 1.4 !important;
+  max-width: 950px !important;
+  margin: 0 auto 2rem auto !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.5px;
+}
+
+.farm-sub-tag {
+  font-size: 0.75rem !important;
+  font-weight: 600 !important;
+  color: #888888 !important;
+  letter-spacing: 2px !important;
+}
+
+/* Alignement Flexbox côte à côte pour les blocs */
+.farm-flex-container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 6rem !important;
+  width: 100%;
+}
+
+/* Classe magique pour inverser l'image et le texte sur ordinateur uniquement */
+.row-reverse-desktop {
+  flex-direction: row-reverse !important;
+}
+
+/* Espace important pour séparer le bloc du haut et le bloc du bas */
+.mb-24 {
+  margin-bottom: 6rem !important;
+}
+
+.farm-left-content {
+  flex: 1.1 !important;
+  text-align: left !important;
+}
+
+.farm-mini-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.farm-left-content h3 {
+  font-size: 1.7rem !important;
+  color: #163321 !important;
+  font-weight: 700 !important;
+  margin: 0 0 1.2rem 0 !important;
+}
+
+.farm-left-content p {
+  font-size: 1.05rem !important;
+  color: #44544a !important; /* Gris vert doux du modèle */
+  line-height: 1.7 !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Boutons "Lire la suite" en vert clair */
+.farm-link-btn {
+  color: #8cb83e !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  transition: color 0.2s;
+  display: inline-block;
+}
+
+.farm-link-btn:hover {
+  color: #163321 !important;
+}
+
+.farm-right-image {
+  flex: 0.9 !important;
+}
+
+/* Ajustement des images de la maquette */
+.farm-pic-style {
+  width: 100% !important;
+  height: 440px !important;
+  object-fit: cover !important;
+  border-radius: 4px !important; /* Coins carrés très légèrement adoucis */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+/* ===================================================
+   ADAPTATION PORTABLE (RESPONSIVE SUR MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+  .farm-big-intro {
+    font-size: 1.3rem !important;
+    line-height: 1.4 !important;
+  }
+  
+  .farm-flex-container {
+    flex-direction: column !important; /* Force l'empilement vertical sur smartphone */
+    gap: 3rem !important;
+  }
+  
+  .mb-24 {
+    margin-bottom: 4rem !important;
+  }
+  
+  .farm-pic-style {
+    height: 300px !important; /* Image un peu plus compacte sur mobile */
+  }
+}
+
+
+
+
+
+
+
+.hero-img {
+  width: 100%;
+  max-width: 250px;
+  height: auto;
+  border-radius: 24px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  
+  /* Ajout d'une transition fluide lors du changement de source */
+  transition: src 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  animation: floatMovement 4s ease-in-out infinite !important;
+}
+/* Conteneur de l'image préparé pour accueillir les flèches */
+.hero-image-container {
+  position: relative !important;
+}
+
+/* On force l'affichage des flèches au survol de la souris */
+.hero-image-container:hover button {
+  opacity: 1 !important;
+}
+
+/* Style des flèches interactives du carrousel */
+.hero-image-container button {
+  border: none !important;
+  outline: none !important;
+  user-select: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+/* --- CODE À AJOUTER TOUT EN BAS DE INDEX.CSS --- */
+
+.hero-image-container {
+  position: relative !important;
+}
+
+
+
+
+/* ===================================================
+   ADAPTATION PORTABLE (FORCER L'EMPILLEMENT DU MODÈLE)
+   =================================================== */
+@media (max-width: 768px) {
+
+  /* Force le texte et l'image à s'empiler verticalement sur une seule colonne */
+  .farm-flex-container {
+    flex-direction: column !important; 
+    gap: 2.5rem !important; /* Espace régulier entre le texte et l'image comme le modèle */
+    width: 100% !important;
+  }
+
+  /* Annule toute inversion pour que l'ordre reste naturel (Texte puis Image) */
+  .farm-flex-container.mb-24,
+  .farm-flex-container:nth-of-type(2) {
+    flex-direction: column !important;
+  }
+
+  /* Ajuste les marges de la section pour l'aérer sur smartphone */
+  .farm-presentation-section {
+    padding: 3rem 6% !important;
+  }
+
+  /* Ajuste la taille de la photo sur l'écran du téléphone */
+  .farm-pic-style {
+    width: 100% !important;
+    height: 320px !important; /* Hauteur idéale sur mobile comme sur ta photo */
+    border-radius: 8px !important;
+  }
+}
+
+
+
+
+
+
+
+/* ===================================================
+   BOUTON WHATSAPP STYLE PILULE ARRONDIE (INSÉRÉ)
+   =================================================== */
+
+.navbar-right-actions {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.2rem !important;
+}
+
+.btn-whatsapp-pill {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #11531e !important; /* Le vert forêt foncé exact de votre image */
+  color: #ffffff !important;            /* Texte blanc pur */
+  text-decoration: none !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  padding: 10px 24px !important;        /* Épaisseur et largeur du bouton */
+  border-radius: 50px !important;       /* Donne l'effet pilule parfaitement arrondi */
+  gap: 10px !important;                 /* Espace entre la bulle et le texte */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  transition: background-color 0.2s, transform 0.2s !important;
+}
+
+/* Effet discret au survol de la souris */
+.btn-whatsapp-pill:hover {
+  background-color: #0b3d15 !important; /* Devient légèrement plus sombre */
+  transform: translateY(-1px) !important;
+}
+
+/* Force la couleur blanche sur l'icône de bulle à gauche */
+.whatsapp-bubble-icon {
+  font-size: 1.1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  filter: brightness(0) invert(1); /* Rend l'émoji blanc comme sur le modèle */
+}
+
+
+
+
+
+
+/* ===================================================
+   DROPDOWN DE CONNEXION NAVBAR (STYLE DE LA PHOTO)
+   =================================================== */
+
+/* Position relative indispensable pour caler la boîte en dessous */
+.account-dropdown-container {
+  position: relative !important;
+}
+
+/* La grande boîte blanche de connexion */
+.login-dropdown-box {
+  position: absolute !important;
+  top: 55px !important; /* Se place juste sous l'icône du menu */
+  right: 0 !important;   /* Aligné sur le bord droit */
+  background-color: #ffffff !important;
+  border-top: 3px solid #8cb83e !important; /* Ligne verte supérieure du modèle */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+  padding: 2.2rem !important;
+  width: 320px !important; /* Largeur de la boîte */
+  border-radius: 0 0 8px 8px !important;
+  z-index: 2000 !important; /* Passe devant absolument tout le site */
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+
+/* Titre "Sign in" */
+.login-dropdown-box h3 {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 1.6rem !important;
+  color: #212121 !important;
+  font-weight: 500 !important;
+  margin-top: 0 !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* Blocs d'inputs */
+.form-group-login {
+  margin-bottom: 1.2rem !important;
+}
+
+.form-group-login label {
+  display: block !important;
+  font-size: 0.9rem !important;
+  color: #555555 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* L'étoile rouge obligatoire */
+.required-star {
+  color: #c62828 !important;
+  font-weight: bold;
+}
+
+/* Style des champs de texte de saisie */
+.form-group-login input {
+  width: 100% !important;
+  padding: 12px 14px !important;
+  border: 1px solid #e0e0e0 !important;
+  border-radius: 4px !important;
+  font-size: 0.95rem !important;
+  color: #333333 !important;
+  background-color: #ffffff !important;
+  box-sizing: border-box !important;
+  outline: none !important;
+  transition: border-color 0.2s !important;
+}
+
+.form-group-login input:focus {
+  border-color: #8cb83e !important; /* Bordure verte quand on clique dessus */
+}
+
+/* Le gros bouton rectangle vert olive "CONNECTÉ" */
+.btn-login-submit {
+  width: 100% !important;
+  background-color: #8cb83e !important; /* Vert olive de votre photo */
+  color: #ffffff !important;
+  border: none !important;
+  padding: 14px !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  margin-top: 1rem !important;
+  transition: background-color 0.2s !important;
+}
+
+.btn-login-submit:hover {
+  background-color: #7ba335 !important; /* Vert un peu plus sombre au survol */
+}
+
+/* Adaptation portable : ferme la boîte ou l'ajuste sur mobile */
+@media (max-width: 768px) {
+  .login-dropdown-box {
+    position: fixed !important;
+    top: 70px !important;
+    left: 5% !important;
+    right: 5% !important;
+    width: 90% !important;
+    border-radius: 8px !important;
+  }
+}
+
+
+/* ===================================================
+   SECTION EXPERTISE : VERSION HARMONISÉE VERT OLIVE
+   =================================================== */
+.expertise-section {
+  background-color: #fcfbfa !important; /* Le fond crème très clair */
+  padding: 5rem 10% !important;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* CORRECTION CRITIQUE : Vrai vert olive mat et plus épais pour un impact haut de gamme */
+.expertise-header h2 {
+  font-size: 2.4rem !important;
+  color: #7ba335 !important; 
+  font-weight: 700 !important; /* Donne du relief au titre comme la maquette */
+  margin-bottom: 0.5rem !important;
+  letter-spacing: -0.5px !important;
+}
+
+.expertise-subtitle {
+  font-size: 1.05rem;
+  color: #666666;
+  margin-bottom: 4rem;
+}
+
+/* La grille s'affiche sur 3 colonnes sur ordinateur */
+.expertise-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important; 
+  gap: 2rem !important;
+  width: 100%;
+}
+
+/* Les fiches de texte blanches avec ombre douce */
+.expertise-card {
+  background-color: #ffffff !important;
+  border-radius: 16px !important;
+  padding: 3rem 2rem !important;
+  text-align: left !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 280px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.expertise-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08) !important;
+}
+
+.expertise-card h3 {
+  font-size: 1.4rem !important;
+  color: #212121 !important;
+  font-weight: 600 !important;
+  margin-top: 0 !important;
+  margin-bottom: 1.2rem !important;
+}
+
+.expertise-card p {
+  font-size: 0.95rem !important;
+  color: #555555 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Le bouton s'harmonise aussi avec la bonne teinte mate */
+.btn-know-more {
+  color: #7ba335 !important; 
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  font-weight: bold !important;
+  font-size: 0.95rem !important;
+  cursor: pointer !important;
+  text-align: left;
+  transition: color 0.2s;
+}
+
+.btn-know-more:hover {
+  color: #5d7e27 !important; /* Un peu plus foncé au survol */
+}
+
+/* ===================================================
+   ADAPTATION PORTABLE (STRUCTURE COLLÉE DU MODÈLE SUR MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+  
+  .expertise-section {
+    padding: 3rem 6% !important;
+  }
+
+  .expertise-header h2 {
+    font-size: 1.8rem !important;
+  }
+
+  /* Force les cartes blanches à s'empiler à la verticale sur mobile comme sur l'image */
+  .expertise-grid {
+    grid-template-columns: 1fr !important; 
+    gap: 1.5rem !important; /* Distance verticale exacte */
+  }
+
+  .expertise-card {
+    padding: 2rem 1.5rem !important;
+    min-height: auto !important;
+  }
+}
+
+
+/* ===================================================
+   SECTION PROJETS RÉALISÉS (STYLE CAHIER DES CHARGES)
+   =================================================== */
+.projects-section {
+  background-color: #ffffff !important; /* Fond blanc pur pour alterner les sections */
+  padding: 6rem 10% !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.projects-header {
+  text-align: center !important;
+  margin-bottom: 4rem !important;
+}
+
+.projects-badge {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  color: #7ba335 !important; /* Le vert olive de votre maquette */
+  letter-spacing: 2px !important;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.projects-header h2 {
+  font-size: 2.4rem !important;
+  color: #212121 !important;
+  font-weight: 700 !important;
+  margin: 0 0 1rem 0 !important;
+  letter-spacing: -0.5px;
+}
+
+.projects-subtitle {
+  font-size: 1.05rem;
+  color: #666666;
+  max-width: 600px;
+  margin: 0 auto !important;
+  line-height: 1.5;
+}
+
+/* LA GRILLE : Aligne les 2 blocs de projets côte à côte sur PC */
+.projects-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important; /* Force les 2 colonnes horizontales */
+  gap: 3rem !important; /* Espace confortable entre les deux projets */
+  width: 100%;
+}
+
+.project-card {
+  background-color: #fcfbfa !important; /* Fond crème très léger à l'intérieur des cartes */
+  border-radius: 20px !important;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover {
+  transform: translateY(-6px) !important; /* Léger soulèvement au survol de la souris */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06) !important;
+}
+
+.project-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 280px; /* Hauteur fixe et stable pour les photos en ligne */
+  overflow: hidden;
+}
+
+.project-img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important; /* Évite de déformer les images chantiers et volailles */
+  transition: transform 0.4s ease;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.03); /* Discret effet de zoom au survol */
+}
+
+/* Petit macaron noir de catégorie posé en bas à gauche de la photo */
+.project-tag {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background-color: #212121;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+}
+
+.project-content {
+  padding: 2rem !important;
+  text-align: left !important;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.project-content h3 {
+  font-size: 1.4rem !important;
+  color: #212121 !important;
+  font-weight: 600 !important;
+  margin: 0 0 0.8rem 0 !important;
+}
+
+.project-content p {
+  font-size: 0.95rem !important;
+  color: #555555 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 1.8rem !important;
+  flex-grow: 1;
+}
+
+/* Lien d'action en vert olive conforme */
+.project-link {
+  color: #7ba335 !important; 
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  transition: color 0.2s;
+  display: inline-block;
+}
+
+.project-link:hover {
+  color: #5d7e27 !important; /* Devient un peu plus foncé au survol */
+}
+
+/* ===================================================
+   ADAPTATION PORTABLE (RESPONSIVE SUR MOBILE)
+   =================================================== */
+@media (max-width: 768px) {
+  .projects-section {
+    padding: 4rem 6% !important;
+  }
+  
+  .projects-header h2 {
+    font-size: 1.9rem !important;
+  }
+  
+  /* FORCE L'EMPILLEMENT DU MODÈLE : Un projet sous l'autre sur écran mobile */
+  .projects-grid {
+    grid-template-columns: 1fr !important; /* Passe sur 1 seule colonne verticale */
+    gap: 2rem !important;
+  }
+  
+  .project-img-wrapper {
+    height: 220px !important; /* Hauteur ajustée pour écran de téléphone */
+  }
+}
+
+
+
+
+
+
+
+/* ===================================================
+   SECTION GALERIE DE TERRAIN INTERACTIVE (ANTI-PLAGIAT)
+   =================================================== */
+.gallery-section {
+  background-color: #fcfbfa !important; /* Alternance sur fond crème très doux */
+  padding: 5rem 10% !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.gallery-header {
+  text-align: center !important;
+  margin-bottom: 4rem !important;
+}
+
+.gallery-badge {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  color: #7ba335 !important; /* Rappel de votre vert olive mat */
+  letter-spacing: 2px !important;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.gallery-header h2 {
+  font-size: 2.4rem !important;
+  color: #163321 !important; /* Vert très sombre */
+  font-weight: 700 !important;
+  margin: 0 0 1rem 0 !important;
+}
+
+.gallery-subtitle {
+  font-size: 1.05rem;
+  color: #666666;
+  max-width: 650px;
+  margin: 0 auto !important;
+  line-height: 1.5;
+}
+
+/* Le rail horizontal de défilement des images */
+.gallery-carousel-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Permet de glisser de gauche à droite au doigt ou à la souris */
+  padding-bottom: 1.5rem;
+  scrollbar-width: thin; /* Barre de défilement discrète */
+}
+
+.gallery-track-scroll {
+  display: flex !important;
+  gap: 2rem !important;
+  width: max-content;
+}
+
+/* Style de chaque carte d'image de la galerie */
+.gallery-item-card {
+  width: 280px;
+  height: 380px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item-card:hover {
+  transform: translateY(-5px) !important;
+}
+
+.gallery-item-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bandeau d'information textuel noir transparent au bas de l'image */
+.gallery-item-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 100%);
+  padding: 1.5rem 1.2rem !important;
+  text-align: left !important;
+  box-sizing: border-box;
+}
+
+.gallery-item-info h4 {
+  font-size: 1.1rem !important;
+  color: #ffffff !important;
+  margin: 0 0 0.3rem 0 !important;
+  font-weight: 600;
+}
+
+.gallery-item-info p {
+  font-size: 0.8rem !important;
+  color: #cccccc !important;
+  margin: 0 !important;
+}
+
+/* Boîte de contact WhatsApp sous les photos */
+.gallery-cta-box {
+  margin-top: 4rem !important;
+  text-align: center;
+}
+
+.gallery-cta-box p {
+  font-size: 1.05rem;
+  color: #555555;
+  margin-bottom: 1.2rem;
+}
+
+.gallery-whatsapp-btn {
+  display: inline-block !important;
+  background-color: #11531e !important; /* Le vert pilule foncé */
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+  padding: 12px 28px !important;
+  border-radius: 50px !important; /* Format pilule */
+  font-size: 0.95rem !important;
+  box-shadow: 0 4px 10px rgba(17, 83, 30, 0.1);
+  transition: background-color 0.2s;
+}
+
+.gallery-whatsapp-btn:hover {
+  background-color: #0b3d15 !important;
+}
+  .gallery-section {
+    padding: 4rem 6% !important;
+  }
+  .gallery-header h2 {
+    font-size: 1.9rem !important;
+  }
+  .gallery-item-card {
+    width: 240px; /* Cartes d'images légèrement réduites sur mobile */
+    height: 320px;
+  }
+
+
+
+  /* ===================================================
+   ADAPTATION DU DAMIER SUR TABLETTE & IPAD
+   =================================================== */
+@media (max-width: 1024px) {
+  
+  /* Force les blocs de présentation à s'empiler proprement comme sur mobile */
+  .farm-flex-container {
+    flex-direction: column !important;
+    gap: 3rem !important;
+    width: 100% !important;
+  }
+
+  /* Garde l'ordre naturel : Texte puis Image */
+  .farm-flex-container.mb-24 {
+    flex-direction: column-reverse !important; /* Met la photo de M. Simeon sous le titre de présentation */
+    margin-bottom: 4rem !important;
+  }
+
+  .farm-presentation-section {
+    padding: 4rem 8% !important;
+  }
+
+  /* Redimensionne l'image pour qu'elle s'intègre parfaitement à la largeur de l'iPad */
+  .farm-pic-style {
+    width: 100% !important;
+    max-width: 600px !important;
+    height: 380px !important;
+    margin: 0 auto !important; /* Centre l'image horizontalement */
+    display: block !important;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===================================================
+   SECTION LOGOS PARTENAIRES (CONFIRME CLIENT)
+   =================================================== */
+.partners-section {
+  background-color: #fcfbfa !important; /* Fond crème très doux pour alterner */
+  padding: 6rem 10% !important;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  border-top: 1px solid #eaeaea;
+}
+
+.partners-header {
+  margin-bottom: 4rem !important;
+}
+
+.partners-top-badge {
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  color: #7ba335 !important; /* Votre vert olive mat harmonisé */
+  letter-spacing: 2px !important;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.partners-header h3 {
+  font-size: 2.2rem !important;
+  color: #163321 !important; /* Vert très sombre */
+  font-weight: 700 !important;
+  margin: 0 0 0.8rem 0 !important;
+  letter-spacing: -0.5px;
+}
+
+.partners-header p {
+  font-size: 1rem;
+  color: #666666;
+  max-width: 600px;
+  margin: 0 auto !important;
+}
+
+/* Alignement Flexbox pour aligner et centrer les 6 logos */
+.partners-grid-flow {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 2.5rem !important;
+  flex-wrap: wrap !important; /* Permet de revenir à la ligne proprement si l'écran est petit */
+  width: 100%;
+}
+
+/* Cartes des logos au style minimaliste et institutionnel */
+.partner-logo-card {
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  color: #90a498 !important; /* Teinte gris-vert discrète pour faire ressortir les textes */
+  letter-spacing: 2px !important;
+  padding: 1.2rem 2.8rem !important;
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+  transition: color 0.2s, transform 0.2s, box-shadow 0.2s;
+  user-select: none;
+}
+
+/* Effet dynamique discret quand la souris passe sur un partenaire */
+.partner-logo-card:hover {
+  color: #7ba335 !important; /* Reprend le vert olive au survol */
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(123, 163, 53, 0.08) !important;
+}
+
+  .partners-section { padding: 4rem 6% !important; }
+  .partners-header h3 { font-size: 1.7rem !important; }
+  .partners-grid-flow { gap: 1.5rem !important; }
+  .partner-logo-card { font-size: 1.1rem !important; padding: 0.8rem 1.8rem !important; }
+/* ===================================================
+   FOOTER MINIMALISTE ET ÉPURÉ (ANTI-SURCHARGE)
+   =================================================== */
+.moaye-simple-footer {
+  background-color: #114314 !important; /* Le vert forêt profond signature */
+  color: #ffffff !important;
+  padding: 4rem 10% 2rem 10% !important;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  border-top: 3px solid #7ba335; /* Fine ligne vert olive d'accentuation */
+}
+
+/* Conteneur principal aligné sur une seule ligne sur ordinateur */
+.footer-simple-container {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  width: 100%;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08); /* Ligne de séparation très discrète */
+}
+
+/* Bloc Marque */
+.footer-simple-brand h3 {
+  font-size: 1.4rem !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  margin: 0 0 0.3rem 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.footer-simple-brand h3 span {
+  color: #7ba335 !important; /* Vert olive */
+}
+
+.footer-simple-brand p {
+  font-size: 0.85rem !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  margin: 0 !important;
+}
+
+/* Bloc Contacts Central */
+.footer-simple-contacts {
+  text-align: center !important;
+}
+
+.footer-phone-highlight {
+  font-size: 1.05rem !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.3rem 0 !important;
+}
+
+.footer-simple-contacts a {
+  font-size: 0.85rem !important;
+  color: #7ba335 !important; /* Mail souligné vert olive */
+  text-decoration: underline !important;
+}
+
+/* Liens discrets à droite */
+.footer-simple-nav {
+  display: flex !important;
+  gap: 1.5rem !important;
+}
+
+.footer-simple-nav a {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-decoration: none !important;
+  font-size: 0.9rem !important;
+  font-weight: 500 !important;
+  transition: color 0.2s ease;
+}
+
+.footer-simple-nav a:hover {
+  color: #7ba335 !important;
+}
+
+/* Zone Copyright en bas */
+.footer-simple-bottom {
+  text-align: center !important;
+  padding-top: 1.8rem;
+}
+
+.footer-simple-bottom p {
+  font-size: 0.75rem !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  margin: 0 !important;
+}
+  .moaye-simple-footer {
+    padding: 3rem 6% 1.5rem 6% !important;
+  }
+  /* Empile proprement les 3 blocs à la verticale sur mobile */
+  .footer-simple-container {
+    flex-direction: column !important;
+    gap: 2rem !important;
+    text-align: center !important;
+  }
+  .footer-simple-nav {
+    gap: 1.2rem !important;
+    justify-content: center;
+  }
+
+
+
