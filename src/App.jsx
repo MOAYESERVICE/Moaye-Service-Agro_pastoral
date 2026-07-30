@@ -5,7 +5,7 @@ import Navbar from './components/Navbar';
 import Home from './page/Home';
 // 2. IMPORTATION DE LA NOUVELLE PAGE DE CONNEXION / INSCRIPTION
 import Auth from './page/Auth'; 
-// 3. MISE A JOUR : IMPORTATION DE VOTRE FICHIER CONTACTPAGE EXIStANT
+// 3. MISE A JOUR : IMPORTATION DE VOTRE FICHIER CONTACTPAGE EXISTANT
 import ContactPage from './page/ContactPage';
 import './App.css';
 import DemandeDevis from './page/DemandeDevis';
