@@ -1,33 +1,44 @@
-import React from 'react';
-// 1. IMPORTATION DU SYSTÈME DE ROUTES
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './page/Home';
-// 2. IMPORTATION DE LA NOUVELLE PAGE DE CONNEXION / INSCRIPTION
 import Auth from './page/Auth'; 
-// 3. MISE A JOUR : IMPORTATION DE VOTRE FICHIER CONTACTPAGE EXISTANT
 import ContactPage from './page/ContactPage';
-import './App.css';
 import DemandeDevis from './page/DemandeDevis';
-
+import ExpertisePage from './page/ExpertisePage';
+import VisionPage from './page/VisionPage';
+import EngagementsPage from './page/EngagementsPage';
+import SuccessPage from './page/SuccessPage';
+import './App.css';
 
 export default function App() {
+  const [messageDuBackend, setMessageDuBackend] = useState('Chargement du message...');
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/message')
+      .then(res => res.json())
+      .then(data => setMessageDuBackend(data.text))
+      .catch(() => setMessageDuBackend('Erreur de connexion au backend'));
+  }, []);
+
   return (
     <Router>
       <div className="app-container">
-        {/* La Navbar reste visible en permanence en haut du site */}
+        <div style={{ padding: '10px', textAlign: 'center', backgroundColor: '#e0f7fa', color: '#006064', fontWeight: 'bold' }}>
+          {messageDuBackend}
+        </div>
+
         <Navbar />
         
-        {/* SYSTÈME DE REDIRECTION INTELLIGENT */}
         <Routes>
-          {/* Route par défaut : charge la page d'accueil principale avec toutes vos sections */}
           <Route path="/" element={<Home />} />
-          
-          {/* Route dédiée : se charge au clic sur l'icône de l'utilisateur */}
           <Route path="/connexion" element={<Auth />} />
-
-          {/* MISE A JOUR CRITIQUE : Ajout de la route pour le bouton Contactez-nous */}
           <Route path="/nous-contacter" element={<ContactPage />} />
+          <Route path="/demande-devis" element={<DemandeDevis />} />
+          <Route path="/nos-expertises" element={<ExpertisePage />} />
+          <Route path="/notre-vision" element={<VisionPage />} />
+          <Route path="/nos-engagements" element={<EngagementsPage />} />
+          <Route path="/confirmation-succes" element={<SuccessPage />} />
         </Routes>
       </div>
     </Router>

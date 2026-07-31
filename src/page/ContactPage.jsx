@@ -9,12 +9,12 @@ export default function ContactPage() {
     fullName: '',
     phone: '',
     location: '',
-    serviceType: '', // Contiendrait l'option sélectionnée au clic
+    serviceType: '', // Enregistre le titre du pôle sélectionné
     surfaceArea: '',
     description: ''
   });
 
-  // Liste propre des expertises officielles de Moaye Service
+  // Liste officielle des expertises Moaye Service
   const moayeExpertises = [
     { id: 'avi', title: 'Génie Avicole', desc: 'Pondeuses, poulets de chair, formulation d\'aliments' },
     { id: 'aqua', title: 'Ingénierie Aquacole', desc: 'Hors-sol, étangs, cages flottantes, pisciculture' },
@@ -30,25 +30,44 @@ export default function ContactPage() {
       return;
     }
 
-    const cleanMessage = `*NOUVELLE DEMANDE DE PROJET - MOAYE SERVICE*%0A%0A` +
-      `👤 *Client :* ${formData.fullName}%0A` +
-      `📞 *Contact :* ${formData.phone}%0A` +
-      `📍 *Zone du projet :* ${formData.location}%0A%0A` +
-      `⚙️ *Axe technique :* ${formData.serviceType}%0A` +
-      `📐 *Superficie / Capacité :* ${formData.surfaceArea}%0A%0A` +
-      `📝 *Cahier des charges :*%0A${formData.description}`;
+    // 1. Envoi asynchrone en arrière-plan vers votre serveur backend Node.js
+    fetch('http://localhost:5000/api/devis', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+    .then((res) => res.json())
+    .catch((err) => {
+      // Évite de bloquer l'utilisateur si le serveur local n'est pas lancé
+      console.log("Note: Serveur backend injoignable, redirection forcée.", err);
+    });
 
-    window.open(`https://wa.me{cleanMessage}`, '_blank');
+    // 2. CORRECTIF TECHNIQUE : Remise à zéro immédiate du formulaire
+    setFormData({
+      fullName: '',
+      phone: '',
+      location: '',
+      serviceType: '',
+      surfaceArea: '',
+      description: ''
+    });
+    
+    // 3. SELECTION CRITIQUE : Redirection instantanée garantie à chaque clic
+    navigate('/confirmation-succes');
   };
 
   return (
     <div className="moaye-contact-wrapper">
       <div className="moaye-contact-card">
         
+        {/* BOUTON RETOUR ÉPURÉ */}
         <button className="moaye-back-link" onClick={() => navigate('/')}>
-          ➔ Retour à l'accueil
+          ← Retour à l'accueil
         </button>
 
+        {/* EN-TÊTE DE LA PAGE */}
         <div className="moaye-contact-intro">
           <h2>Lancer une Étude de Projet</h2>
           <p>Bureau d'études techniques de <strong>Moaye Service Toumodi</strong>. Transmettez votre cahier des charges opérationnel.</p>
@@ -56,12 +75,14 @@ export default function ContactPage() {
 
         <form onSubmit={handleMoayeSubmit} className="moaye-structured-form">
           
+          {/* LIGNE DE SAISIE 1 */}
           <div className="moaye-form-row">
             <div className="moaye-input-container">
               <label>Nom Complet du Promoteur *</label>
               <input 
                 type="text" 
-                placeholder="Ex: Kouadio Koffi Michael"
+                autoComplete="off"
+                placeholder="Veuillez écrire votre nom complet"
                 value={formData.fullName}
                 onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                 required 
@@ -69,10 +90,11 @@ export default function ContactPage() {
             </div>
 
             <div className="moaye-input-container">
-              <label>Numéro WhatsApp *</label>
+              <label>Numéro de téléphone *</label>
               <input 
                 type="tel" 
-                placeholder="Ex: 0565640805"
+                autoComplete="off"
+                placeholder="Veuillez écrire votre numéro de téléphone"
                 value={formData.phone}
                 onChange={(e) => setFormData({...formData, phone: e.target.value})}
                 required 
@@ -80,12 +102,14 @@ export default function ContactPage() {
             </div>
           </div>
 
+          {/* LIGNE DE SAISIE 2 */}
           <div className="moaye-form-row">
             <div className="moaye-input-container">
               <label>Localité du projet *</label>
               <input 
                 type="text" 
-                placeholder="Ex: Toumodi, Yamoussoukro..."
+                autoComplete="off"
+                placeholder="Veuillez écrire la localité du projet"
                 value={formData.location}
                 onChange={(e) => setFormData({...formData, location: e.target.value})}
                 required 
@@ -96,7 +120,8 @@ export default function ContactPage() {
               <label>Superficie / Capacité visée *</label>
               <input 
                 type="text" 
-                placeholder="Ex: 2 Hectares / 10 000 pondeuses"
+                autoComplete="off"
+                placeholder="Veuillez écrire les dimensions ou la capacité"
                 value={formData.surfaceArea}
                 onChange={(e) => setFormData({...formData, surfaceArea: e.target.value})}
                 required 
@@ -104,7 +129,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* RÈGLE LE BUG : SÉLECTEUR DEVENU DES CARTES D'OPTIONS INTERACTIVES */}
+          {/* GRILLE INTERACTIVE SANS MENU DÉROULANT BLEU */}
           <div className="moaye-input-container full-width-field">
             <label className="section-field-label">Sélectionnez le pôle d'intervention technique *</label>
             
@@ -125,17 +150,19 @@ export default function ContactPage() {
             </div>
           </div>
 
+          {/* ESPACE SPECIFICATIONS */}
           <div className="moaye-input-container full-width-field">
             <label>Détaillez vos exigences et votre calendrier *</label>
             <textarea 
               rows="4" 
-              placeholder="Décrivez précisément votre projet (besoin en forage, provenderie, accès électricité...)"
+              placeholder="Veuillez écrire les détails et spécifications de votre demande ici..."
               value={formData.description}
               onChange={(e) => setFormData({...formData, description: e.target.value})}
               required
             ></textarea>
           </div>
 
+          {/* BOUTON D'ENVOI VERT OFFICIEL */}
           <button type="submit" className="moaye-submit-project-btn">
             Valider et envoyer le cahier des charges
           </button>

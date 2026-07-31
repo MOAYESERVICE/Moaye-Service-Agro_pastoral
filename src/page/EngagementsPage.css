@@ -1,0 +1,239 @@
+/* ==========================================================================
+   CHARTE DE DESIGN IMMERSIF — PAGE INTERNE EXCLUSIVE DES ENGAGEMENTS
+   ========================================================================== */
+
+/* 1. CONTENEUR GLOBAL : Pleine page blanc pur sans cassure */
+.engagements-page-wrapper {
+  min-height: calc(100vh - 70px);
+  background: #ffffff !important; 
+  background-color: #ffffff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  padding: 0 !important; 
+  width: 100% !important;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* 2. ENVELOPPE MAÎTRESSE : Étalée horizontalement de tout son long */
+.engagements-main-card {
+  background-color: #ffffff !important;
+  padding: 4rem 10% !important; /* Marge interne harmonisée à la barre supérieure */
+  border-radius: 0 !important; 
+  box-shadow: none !important; 
+  width: 100% !important;
+  max-width: 100% !important; 
+  box-sizing: border-box;
+  border-top: 6px solid #558b2f !important; /* Ligne de tête en vrai vert vif */
+}
+
+/* Bouton de retour en arrière vert vif */
+.engagements-back-btn {
+  background: none !important;
+  border: none !important;
+  color: #558b2f !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  font-size: 0.95rem !important;
+  margin-bottom: 2.5rem !important;
+  padding: 0 !important;
+  display: inline-block;
+  font-family: inherit;
+  transition: transform 0.2s;
+}
+
+.engagements-back-btn:hover {
+  transform: translateX(-4px);
+}
+
+/* ==========================================================================
+   3. CONFIGURATION DOUBLE SECTION : ALIGNEMENT CÔTE À CÔTE SANS BLOCAGE
+   ========================================================================== */
+.engagements-split-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 4rem !important;
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  box-sizing: border-box !important;
+}
+
+/* PANNEAU DE TEXTE GAUCHE */
+.engagements-left-panel {
+  flex: 1.1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.engagements-page-meta-tag {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: #ff6e40 !important; /* Rappel de l'orange d'accentuation */
+  background-color: rgba(255, 110, 64, 0.08) !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+}
+
+.engagements-left-panel h2 {
+  color: #114314 !important; /* Vrai vert forêt institutionnel */
+  font-size: 2.6rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 0.6rem 0 !important;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.engagements-page-subtitle {
+  color: #556655 !important;
+  font-size: 1.05rem !important;
+  margin: 0 0 2rem 0 !important;
+  line-height: 1.4;
+}
+
+/* Grand encadré textuel sur fond vert crème clair doux approuvé */
+.engagements-page-intro-pacte {
+  font-size: 1.1rem !important;
+  color: #2e441b !important;
+  line-height: 1.6 !important;
+  background-color: #f1f8e9 !important; /* Seul fond de lissage crème clair toléré */
+  padding: 24px 30px !important;
+  border-radius: 12px !important;
+  border-left: 4px solid #558b2f !important;
+  margin-bottom: 1.5rem !important;
+  font-weight: 500;
+}
+
+.engagements-additional-text {
+  font-size: 0.98rem !important;
+  color: #445544 !important;
+  line-height: 1.6 !important;
+  margin: 0 !important;
+}
+
+/* PANNEAU DE CARTES DROITE */
+.engagements-right-panel {
+  flex: 0.9 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.section-right-title {
+  color: #114314 !important;
+  font-size: 1.3rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 1.5rem 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.engagements-page-goals-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.2rem !important; /* Espacement régulier et aéré des fiches */
+}
+
+/* LA CARTE TECHNIQUE AU REPOS : TOTALEMENT BLANCHE ET PROPRE */
+.engagements-page-goal-card {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important; /* Fine bordure grise unifiée au devis */
+  padding: 20px 24px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 16px !important;
+  box-sizing: border-box !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+/* ILLUMINATION DISCRÈTE AU SURVOL DE LA SOURIS */
+.engagements-page-goal-card:hover {
+  border-color: #558b2f !important; /* Le contour s'allume au vert vif */
+  box-shadow: 0 4px 15px rgba(85, 139, 47, 0.04) !important;
+}
+
+.goal-page-num {
+  font-size: 1.2rem !important;
+  font-weight: 800 !important;
+  color: #558b2f !important; /* Coche de validation verte */
+  margin-top: -2px;
+}
+
+.goal-page-content h4 {
+  color: #114314 !important;
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 4px 0 !important;
+}
+
+.goal-page-content p {
+  font-size: 0.92rem !important;
+  color: #333333 !important; /* Écriture noire neutre pure */
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* ==========================================================================
+   4. BASE DE PIED DE PAGE : INTEGRALEMENT BLANC (AUCUN RÉSIDU CRÈME MOCHE)
+   ========================================================================== */
+.engagements-page-action-footer {
+  background-color: #ffffff !important; 
+  padding: 2.5rem !important;
+  border-radius: 12px !important;
+  text-align: center !important;
+  border: 1px solid #e2e8f0 !important; /* Fine ligne de lissage grise nette */
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 5rem auto 0 auto !important;
+  box-sizing: border-box;
+}
+
+.engagements-page-action-footer p {
+  font-size: 1.1rem !important;
+  color: #111111 !important; /* Texte en noir lisible impeccable */
+  margin: 0 0 1.5rem 0 !important;
+  font-weight: 700;
+}
+
+/* Le grand bouton vert d'ouverture de devis */
+.engagements-page-cta-btn {
+  background-color: #558b2f !important; 
+  color: #ffffff !important;
+  border: none !important;
+  padding: 16px 32px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 15px rgba(85, 139, 47, 0.15) !important;
+  transition: background-color 0.2s !important;
+}
+
+.engagements-page-cta-btn:hover {
+  background-color: #33691e !important;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE SÉCURISÉ TOUS SMARTPHONES
+   ========================================================================== */
+@media (max-width: 992px) {
+  .engagements-split-layout {
+    flex-direction: column !important; /* S'empile proprement à la verticale sur mobile */
+    gap: 2.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .engagements-main-card { padding: 3rem 1.5rem !important; }
+  .engagements-left-panel h2 { font-size: 1.9rem !important; }
+  .engagements-page-intro-pacte { padding: 18px 20px !important; font-size: 1rem !important; }
+  .engagements-page-goal-card { padding: 16px !important; }
+  .engagements-page-action-footer { padding: 1.5rem 1rem !important; }
+}

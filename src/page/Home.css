@@ -48,7 +48,7 @@
   animation: none !important;
 }
 
-/* --- DESIGN DES TEXTES ET DES EN-TÊTES DE LA MAQUETTE --- */
+/* --- DESIGN DES TEXTES ET DES EN-TÊTE DE LA MAQUETTE --- */
 .hero-badges-clean-layout {
   display: flex !important;
   align-items: center !important;
@@ -114,32 +114,124 @@
   50% { opacity: 0; }
 }
 
-/* LE BOUTON PILULE VERT WHATSAPP */
-.btn-whatsapp-hero {
+/* ==========================================================================
+   ZONE CTA DES BOUTONS DE REDIRECTION (ALIGNEMENT DE STANDING UNIFIÉ)
+   ========================================================================== */
+.hero-cta-zone {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 1.2rem !important;
+  flex-wrap: wrap !important;
+  width: 100% !important;
+  margin-top: 1rem !important;
+}
+
+/* LE BOUTON DEVIS VERT DE LA MAQUETTE */
+.btn-green-devis-hero {
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 10px !important;
-  background-color: #1b5e20 !important;
+  background-color: #1b5e20 !important; /* Vrai vert forêt de votre image */
   color: #ffffff !important;
   text-decoration: none !important;
-  padding: 14px 28px !important;
-  border-radius: 24px !important; /* Forme ovale parfaite */
+  padding: 14px 32px !important;
+  border-radius: 24px !important; /* Ovale parfaite */
   font-weight: 700 !important;
   font-size: 0.95rem !important;
-  box-shadow: 0 4px 15px rgba(27, 94, 32, 0.25) !important;
+  box-shadow: 0 4px 15px rgba(27, 94, 32, 0.2) !important;
+  transition: background-color 0.2s, transform 0.2s !important;
+  cursor: pointer !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
 }
 
-.btn-whatsapp-hero:hover {
+.btn-green-devis-hero:hover {
   background-color: #114314 !important;
+  transform: translateY(-2px) !important;
 }
 
-/* ===================================================
+/* BOUTON DÉCOUVRIR NOTRE VISION (IMAGE MODÈLE) */
+.farm-link-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #ffffff !important; /* Fond blanc pur */
+  color: #99cc33 !important;            /* Écriture vert olive clair */
+  border: 2px solid #111111 !important;  /* Fine bordure noire bien nette */
+  padding: 0 24px !important;           /* Format rectangulaire aéré */
+  border-radius: 6px !important;         /* Angles très légèrement adoucis */
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
+}
+
+.farm-link-btn:hover {
+  background-color: #fbfbfa !important;
+}
+
+/* STYLE DU BOUTON ENGAGEMENTS (IMAGE MODÈLE) */
+.btn-consulter-engagements {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background: none !important; 
+  border: none !important;     
+  color: #558b2f !important;    /* Vrai vert vif signature */
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  text-decoration: none !important; 
+  cursor: pointer !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
+}
+
+.btn-consulter-engagements:hover {
+  opacity: 0.9;
+  transform: translateX(4px) !important;
+}
+
+/* ==========================================================================
+   CORRECTION CRITIQUE TABLETTES ET IPAD PRO (EMPILEMENT SÉCURISÉ)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-section {
+    padding-bottom: 7rem !important; /* Ajoute de l'air en bas pour ne pas écraser les CTA */
+  }
+
+  .hero-cta-zone {
+    flex-direction: column !important; /* Empile les boutons pour éviter qu'ils ne sortent de l'écran */
+    align-items: flex-start !important;
+    gap: 1rem !important;
+    width: auto !important;
+  }
+
+  .btn-green-devis-hero,
+  .farm-link-btn,
+  .btn-consulter-engagements {
+    width: 100% !important; /* S'étirent de manière égale et fluide sur la largeur de lecture */
+    min-width: 280px !important;
+    justify-content: center !important;
+  }
+}
+
+/* ==========================================================================
    RESPONSIVE SMARTPHONE MOBILE (ALIGNEMENTS CENTRÉS)
-   =================================================== */
+   ========================================================================== */
 @media (max-width: 768px) {
   .hero-section {
-    padding: 5rem 6% !important;
+    padding: 5rem 6% 6rem 6% !important;
     min-height: 80vh !important;
     background-position: center center !important;
   }
@@ -171,31 +263,173 @@
     font-size: 1rem !important;
     margin-bottom: 2rem !important;
   }
-  .btn-whatsapp-hero {
-    width: 100% !important; /* Prend tout l'espace sur smartphone */
+  .hero-cta-zone {
+    align-items: center !important;
   }
 }
 
+/* ==========================================================================
+   CHARTE DE DESIGN IMMERSIF — MUR DE RÉALISATIONS DE MOAYE SERVICE
+   ========================================================================== */
+/* ==========================================================================
+   CHARTE DE DESIGN IMMERSIF — MUR DE RÉALISATIONS DE MOAYE SERVICE
+   ========================================================================== */
 
-/* LE BOUTON DEVIS VERT DE LA MAQUETTE */
-.btn-green-devis-hero {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 10px !important;
-  background-color: #1b5e20 !important; /* Vrai vert forêt de votre image */
-  color: #ffffff !important;
-  text-decoration: none !important;
-  padding: 14px 32px !important;
-  border-radius: 24px !important; /* Donne exactement la forme ovale de votre capture */
-  font-weight: 700 !important;
-  font-size: 0.95rem !important;
-  box-shadow: 0 4px 15px rgba(27, 94, 32, 0.2) !important;
-  transition: background-color 0.2s, transform 0.2s !important;
-  cursor: pointer !important;
+.galerie-section-home {
+  padding: 0rem 10% 2rem 10% !important; /* CORRECTION : Supprime le rembourrage du haut */
+  margin-top: -3.5rem !important;        /* CORRECTION CRITIQUE : Force la section à remonter contre le bloc précédent */
+  background-color: #ffffff !important;  /* Fond blanc pur permanent */
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
-.btn-green-devis-hero:hover {
-  background-color: #114314 !important;
-  transform: translateY(-2px) !important;
+.galerie-header-home {
+  text-align: left !important;
+  margin-bottom: 2rem !important;        /* CORRECTION : Rapproche le sous-titre des boutons filtres */
+}
+
+.galerie-header-home h2 {
+  color: #114314 !important; /* Vert forêt profond */
+  font-size: 2.6rem !important;
+  font-weight: 800 !important;
+  margin: 0.4rem 0 !important;
+  letter-spacing: -0.5px;
+}
+
+.galerie-meta-tag-home {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: #ff6e40 !important; /* Orange d'accent officiel */
+  background-color: rgba(255, 110, 64, 0.08) !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.galerie-subtitle-home {
+  color: #556655 !important;
+  font-size: 1.05rem !important;
+  line-height: 1.6 !important;
+  max-width: 800px;
+  margin-top: 0.5rem !important;
+}
+
+/* --- ONGLETS DE FILTRAGE ÉPURÉS --- */
+.galerie-filters-tabs {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px !important;
+  margin-bottom: 3.5rem !important;
+  flex-wrap: wrap !important;
+}
+
+.filter-tab-btn {
+  background-color: #ffffff !important;
+  color: #222222 !important;
+  border: 1px solid #cbd5e1 !important; /* Fine bordure grise type devis */
+  padding: 10px 22px !important;
+  border-radius: 20px !important; /* Format pilule élégant */
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  font-family: inherit;
+  transition: all 0.2s ease !important;
+}
+
+/* Effet au survol et actif rattaché aux couleurs du devis */
+.filter-tab-btn:hover,
+.filter-tab-btn.is-active {
+  border-color: #558b2f !important; /* Bordure verte active */
+  color: #558b2f !important;
+  background-color: #f1f8e9 !important; /* Fond crème-vert clair doux cliqué */
+}
+
+/* --- GRILLE DU COMPOSANT PORTFOLIO (PLÉTHORE D'IMAGES) --- */
+.galerie-portfolio-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important; /* Affiche proprement 2 cartes larges par ligne */
+  gap: 2rem !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* LA CARTE DE PROJET AU REPOS : ENTIÈREMENT BLANCHE ET PROPRE */
+.portfolio-project-card {
+  background-color: #ffffff !important;
+  border: 1px solid #cbd5e1 !important; /* Fine bordure unifiée */
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease !important;
+}
+
+/* ILLUMINATION AU SURVOL : FOND CRÈME VERT TRÈS CLAIR DE LA CHARTE VALIDÉE */
+.portfolio-project-card:hover {
+  transform: translateY(-4px) !important; /* Soulèvement discret */
+  background-color: #f1f8e9 !important;   /* Vrai fond crème vert clair doux */
+  border-color: #558b2f !important;       /* Allumage vert vif du contour */
+}
+
+/* Wrapper pour conserver le format d'image entier sans déformation */
+.portfolio-card-img-wrapper {
+  width: 100% !important;
+  height: 260px !important;
+  overflow: hidden;
+  border-bottom: 1px solid #cbd5e1 !important;
+}
+
+.portfolio-card-img-wrapper img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important; /* Cadrage photo parfait */
+}
+
+/* Bloc interne de contenu textuel */
+.portfolio-card-content {
+  padding: 24px !important;
+  text-align: left !important;
+}
+
+.portfolio-card-location {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  color: #ff6e40 !important; /* Badge orange discret */
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.portfolio-card-content h4 {
+  color: #114314 !important; /* Titre vert forêt */
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+.portfolio-card-content p {
+  color: #333333 !important; /* Texte noir neutre ultra-lisible */
+  font-size: 0.95rem !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+
+/* --- RESPONSIVE MOBILE SÉCURISÉ --- */
+@media (max-width: 992px) {
+  .galerie-portfolio-grid {
+    grid-template-columns: 1fr !important; /* Une seule colonne verticale sur smartphone */
+    gap: 1.5rem !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .galerie-section-home { 
+    padding: 0rem 5% 2rem 5% !important; 
+    margin-top: -2rem !important; /* Marge ajustée pour mobile */
+  }
+  .galerie-header-home h2 { font-size: 1.9rem !important; }
+  .portfolio-card-img-wrapper { height: 200px !important; }
 }

@@ -1,0 +1,157 @@
+/* ==========================================================================
+   CHARTE DE DESIGN IMMERSIF ULTRA-ÉPURÉ — PAGE DE SUCCÈS MOAYE SERVICE
+   ========================================================================== */
+
+/* 1. CONTENEUR GLOBAL : Format Pleine Page blanc pur sans coupure visuelle */
+.success-page-wrapper {
+  min-height: calc(100vh - 70px);
+  background: #ffffff !important; 
+  background-color: #ffffff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important; /* Supprime les marges extérieures restrictives */
+  width: 100% !important;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* 2. RESTRUCTURATION : S'étale horizontalement de tout son long */
+.success-main-card {
+  background-color: #ffffff !important;
+  padding: 5rem 10% !important; /* Marges intérieures naturelles alignées sur la Navbar */
+  border-radius: 0 !important; /* Supprime les coins arrondis pour coller aux bords */
+  box-shadow: none !important; /* Plus d'ombre de boîte fermée */
+  width: 100% !important;
+  max-width: 100% !important; 
+  box-sizing: border-box;
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  border-top: 6px solid #558b2f !important; /* Ligne supérieure en vrai vert vif signature */
+}
+
+/* Rond de l'icône de validation */
+.success-icon-circle {
+  font-size: 3rem !important;
+  background-color: #f1f8e9 !important; /* Fond crème-vert très clair de votre charte */
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem !important;
+}
+
+/* En-tête textuel corporate */
+.success-meta-tag {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: #ff6e40 !important; /* Orange d'accentuation officiel Moaye Service */
+  background-color: rgba(255, 110, 64, 0.08) !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 1.2rem;
+}
+
+/* Titre principal de confirmation en Vert Forêt Institutionnel */
+.success-text-zone h2 {
+  color: #114314 !important; 
+  font-size: 2.6rem !important;
+  font-weight: 800 !important;
+  margin: 0 0 1rem 0 !important;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+/* Message phare */
+.success-main-message {
+  font-size: 1.15rem !important;
+  color: #111111 !important; /* Vrai noir net, lisible et propre */
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  margin: 0 0 2rem 0 !important;
+}
+
+/* Ligne de séparation technique discrète */
+.success-divider-line {
+  width: 100% !important;
+  max-width: 800px;
+  height: 1px !important;
+  background-color: #e2e8f0 !important; /* Fine démarcation grise nette */
+  margin: 2.5rem 0 !important;
+}
+
+/* Paragraphes de détails administratifs */
+.success-sub-message {
+  color: #333333 !important; /* Écriture sombre neutre corporative */
+  font-size: 1.05rem !important;
+  line-height: 1.6 !important;
+  max-width: 800px;
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+.success-sub-message p {
+  margin: 0 !important;
+}
+
+/* ==========================================================================
+   3. APPEL À L'ACTION : REVENIR À L'ACCUEIL (STABLE SANS FOND CRÈME AU CLIC)
+   ========================================================================== */
+.success-action-footer {
+  margin-top: 4rem !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+
+/* Le grand bouton vert d'action */
+.success-home-btn {
+  background-color: #558b2f !important; /* Vrai vert vif signature */
+  color: #ffffff !important;
+  border: none !important;
+  padding: 16px 36px !important;
+  border-radius: 8px !important;
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+  cursor: pointer !important;
+  font-family: inherit;
+  box-shadow: 0 4px 15px rgba(85, 139, 47, 0.15) !important;
+  transition: background-color 0.2s ease !important;
+  display: inline-block;
+}
+
+.success-home-btn:hover {
+  background-color: #33691e !important; /* Vert forêt plus sombre au survol */
+}
+
+.success-home-btn:active {
+  transform: scale(0.99);
+}
+
+/* ==========================================================================
+   4. RESPONSIVE SÉCURISÉ POUR SMARTPHONES ET TABLETTES
+   ========================================================================== */
+@media (max-width: 768px) {
+  .success-main-card { 
+    padding: 4rem 1.5rem !important; 
+  }
+  .success-text-zone h2 { 
+    font-size: 1.9rem !important; 
+  }
+  .success-main-message { 
+    font-size: 1rem !important; 
+  }
+  .success-sub-message { 
+    font-size: 0.95rem !important; 
+  }
+  .success-home-btn { 
+    width: 100% !important; 
+    box-sizing: border-box;
+  }
+}
