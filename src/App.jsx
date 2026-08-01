@@ -9,6 +9,13 @@ import ExpertisePage from './page/ExpertisePage';
 import VisionPage from './page/VisionPage';
 import EngagementsPage from './page/EngagementsPage';
 import SuccessPage from './page/SuccessPage';
+
+/* 🟢 IMPORTATION DÉDIÉE DE VOTRE NOUVEL ESPACE CLIENT CONNECTÉ */
+import EspaceClient from './page/EspaceClient';
+
+/* 🟢 IMPORTATION COMPACTE DE VOTRE PAGE CATALOGUE */
+import CatalogueCommandes from './page/CatalogueCommandes';
+
 import './App.css';
 
 export default function App() {
@@ -39,6 +46,12 @@ export default function App() {
           <Route path="/notre-vision" element={<VisionPage />} />
           <Route path="/nos-engagements" element={<EngagementsPage />} />
           <Route path="/confirmation-succes" element={<SuccessPage />} />
+
+          {/* 🟢 ROUTE ROUTE DÉDIÉE UNIQUE POUR LE CATALOGUE */}
+          <Route path="/catalogue-commandes" element={<CatalogueCommandes />} />
+
+          {/* 🟢 AJOUT DE LA ROUTE OFFICIELLE DE L'ESPACE CLIENT */}
+          <Route path="/espace-client" element={<EspaceClient />} />
         </Routes>
       </div>
     </Router>

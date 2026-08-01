@@ -8,7 +8,15 @@ import heroImg from '../assets/hero.png';
 import yaSimeonImg from '../assets/YaSimeon.png'; 
 import pindadImg from '../assets/Pindad.png';
 import gervaisonImg from '../assets/gervaison.png';
-import batimentImg from '../assets/batiment.png';
+import batiment2Img from '../assets/batiment2.png';
+import  travail1Img from '../assets/travail1.png';
+import  poulail1Img from '../assets/poulail1.png';
+import aqualcultureImg from '../assets/aqualculture.png';
+
+
+import  tuyauxImg from '../assets/tuyaux.png';
+
+
 
 export default function Home() {
   // CORRECTION 2 : Création du tableau d'images pour le carrousel de droite
@@ -29,10 +37,10 @@ export default function Home() {
     {
       id: 1,
       categorie: "BTP",
-      titre: "Bâtiment Scolaire PAPSE",
+      titre: "Prêt pour le démarrage de la production !",
       localisation: "Région Nord, Côte d'Ivoire",
-      desc: "Construction de salles de classe durables et sécurisées conformes aux normes étatiques.",
-      img: batimentImg
+      desc: "Les installations techniques sont finalisées : lignes d'abreuvement (pipettes/cloches suspendues) testées et désinfection complète du site effectuée. Le compte à rebours est lancé pour l'arrivée des poussins.",
+      img: batiment2Img
     },
     {
       id: 2,
@@ -40,23 +48,23 @@ export default function Home() {
       titre: "Complexe de 20 000 Pondeuses",
       localisation: "Ferme de Toumodi",
       desc: "Installation de parcs avicoles modernes et systèmes de provenderie intégrés.",
-      img: gervaisonImg
+      img: heroImg
     },
     {
       id: 3,
       categorie: "AQUACOLE",
       titre: "Bassins Piscicoles Hors-Sol",
       localisation: "Zone Centre, Côte d'Ivoire",
-      desc: "Conception de dispositifs hydro-agricoles en circuit fermé pour l'aquaculture durable.",
-      img: pindadImg
+      desc: "conception et gestion de systèmes de production en cages flottantes, enclos, étangs et systèmes hors-sol (RAS).",
+      img: travail1Img
     },
     {
       id: 4,
       categorie: "BTP",
-      titre: "Infrastructures Rurales",
+      titre: "Préparation des structures",
       localisation: "Yamoussoukro",
-      desc: "Aménagements de bâtiments techniques et entrepôts de stockage agricole.",
-      img: heroImg
+      desc: "Perçage et calibrage des tubes en PVC rigide directement sur le terrain. Ces tuyaux serviront de supports solides pour maintenir nos filets et sécuriser les installations",
+      img:  tuyauxImg
     }
   ];
 
@@ -186,7 +194,7 @@ export default function Home() {
 
           </div>
           <div className="farm-right-image">
-            <img src={gervaisonImg} alt="Élevage Avicole Moaye Service" className="farm-pic-style" />
+            <img src={travail1Img} alt="Élevage Avicole Moaye Service" className="farm-pic-style" />
           </div>
         </div>
       </section>
@@ -252,7 +260,7 @@ export default function Home() {
           <div className="project-card">
             <div className="project-img-wrapper">
               <img 
-                src={gervaisonImg} 
+                src={poulail1Img} 
                 alt="Ferme agropastorale intégrée Moaye Service" 
                 className="project-img" 
               />
@@ -273,16 +281,16 @@ export default function Home() {
           <div className="project-card">
             <div className="project-img-wrapper">
               <img 
-                src={pindadImg} 
+                src={aqualcultureImg} 
                 alt="Projet laitier périurbain Moaye Service" 
                 className="project-img" 
               />
               <span className="project-tag">ÉTUDES & FILIÈRES</span>
             </div>
             <div className="project-content">
-              <h3>Accompagnement & Filière Laitière</h3>
+              <h3>Aquaculture durable.</h3>
               <p>
-                Rédaction de plans d'affaires (business plans) et appui technique de pointe, illustré par notre Projet Laitier Périurbain mené en synergie avec le Centre Suisse de Recherches Scientifiques en Côte d'Ivoire.
+                 l'installation de cages flottantes artisanales sur un cours d'eau. Une solution locale et efficace pour optimiser la production piscicole et renforcer la sécurité alimentaire
               </p>
               <Link to="/nos-expertises" className="project-link">
                 Voir la fiche technique →
@@ -291,7 +299,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-               {/* ===================================================
+                {/* ===================================================
+             {/* ===================================================
          7. SECTION : LE MUR DE RÉALISATIONS (PLÉTHORE D'IMAGES FILTRABLES)
          =================================================== */}
       <section className="galerie-section-home" id="mur-realisations">
@@ -302,15 +311,14 @@ export default function Home() {
           </p>
         </div>
 
-        {/* ONGLETS DE FILTRAGE ÉPURÉS */}
+        {/* ONGLETS DE FILTRAGE ÉPURÉS ORIGINAUX */}
         <div className="galerie-filters-tabs">
-          <button className={`filter-tab-btn ${activeFilter === 'TOUT' ? 'is-active' : ''}`} onClick={() => setActiveFilter('TOUT')}>Tout Voir</button>
           <button className={`filter-tab-btn ${activeFilter === 'BTP' ? 'is-active' : ''}`} onClick={() => setActiveFilter('BTP')}> BTP & Génie Civil</button>
           <button className={`filter-tab-btn ${activeFilter === 'AVICOLE' ? 'is-active' : ''}`} onClick={() => setActiveFilter('AVICOLE')}>Génie Avicole</button>
           <button className={`filter-tab-btn ${activeFilter === 'AQUACOLE' ? 'is-active' : ''}`} onClick={() => setActiveFilter('AQUACOLE')}>Ingénierie Aquacole</button>
         </div>
 
-        {/* GRILLE PORTE-FOLIO DE PLÉTHORE D'IMAGES */}
+        {/* GRILLE PORTE-FOLIO DE PLÉTHORE D'IMAGES ORIGINALE */}
         <div className="galerie-portfolio-grid">
           {projetsFilitres.map((projet) => (
             <div key={projet.id} className="portfolio-project-card">
@@ -325,7 +333,15 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* BOUTON TOUT VOIR AVEC VOTRE INTITULÉ EXACT ET VOS CLASSES STABLES */}
+        <div className="galerie-explore-footer-home" style={{ width: '100%', textAlign: 'center', marginTop: '3.5rem' }}>
+          <Link to="/catalogue-commandes" className="filter-tab-btn is-active" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none', padding: '12px 36px', borderRadius: '24px' }}>
+            Voir Tout & Passez une Commande ➔
+          </Link>
+        </div>
       </section>
+
 
            {/* ===================================================
          8. FOOTER RESTRUCTURÉ ET ÉPURÉ (UX SIMPLE)
