@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
+// 🌟 CONFIGURATION DYNAMIQUE CLOUD AUTOMATIQUE : Aligné sur votre tunnel ngrok actif
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000' 
+  : 'https://ngrok-free.dev';
+
 export default function Auth() {
   const navigate = useNavigate();
   const [mode, setMode] = useState('login');
@@ -36,7 +41,8 @@ export default function Auth() {
 
     try {
       if (mode === 'register') {
-        const response = await fetch('http://localhost:5000/api/auth/register', {
+        // ☁️ Envoi sécurisé via la variable API globale
+        const response = await fetch(`${API_URL}/api/auth/register`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -61,7 +67,8 @@ export default function Auth() {
         }
 
       } else {
-        const response = await fetch('http://localhost:5000/api/auth/login', {
+        // ☁️ Connexion sécurisée via la variable API globale
+        const response = await fetch(`${API_URL}/api/auth/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: form.email, password: form.codeSecret })
@@ -77,7 +84,7 @@ export default function Auth() {
         }
       }
     } catch (err) {
-      alert("Erreur : Le serveur local n'est pas démarré.");
+      alert("Erreur : Impossible de joindre le serveur de base de données Moaye Service Cloud.");
     }
   };
 

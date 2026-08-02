@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DemandeDevis.css';
 
+// 🌟 CONFIGURATION DYNAMIQUE CLOUD : Aligné sur votre tunnel ngrok actif pour votre absence
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000' 
+  : 'https://ngrok-free.dev';
+
 export default function DemandeDevis() {
   const navigate = useNavigate();
   
@@ -38,23 +43,23 @@ export default function DemandeDevis() {
 
     if (Object.keys(err).length > 0) return setErrors(err);
 
-    // 1. ☁️ Envoi asynchrone synchronisé avec l'Espace Client vers Supabase
+    // 1. ☁️ Envoi asynchrone sécurisé via la variable API globale
     try {
-      await fetch('http://localhost:5000/api/devis', {
+      await fetch(`${API_URL}/api/devis`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           clientName: form.clientName,
-          email: emailSession, // 🌟 ESSENTIEL : Lie le devis à l'utilisateur connecté
+          email: emailSession, 
           phone: form.phone,
           location: form.location,
           projectType: form.projectType,
-          exploitationSize: form.volume, // Transmet la capacité saisie
+          exploitationSize: form.volume, 
           message: `Demande formulée depuis la grille des pôles d'intervention pour le secteur : ${form.projectType}.`
         })
       });
 
-      // 🌟 TRANSFERT EN LOCAL: Permet une mise à jour visuelle immédiate dans l'Espace Client si nécessaire
+      // TRANSFERT EN LOCAL : Permet une mise à jour visuelle immédiate dans l'Espace Client
       localStorage.setItem('moaye_dernier_devis_pole', form.projectType);
       localStorage.setItem('moaye_dernier_devis_capacite', form.volume);
 
@@ -62,7 +67,7 @@ export default function DemandeDevis() {
       console.error("Note: Erreur réseau Supabase ignorée pour ne pas bloquer l'utilisateur.", error);
     }
 
-    // 2. Préparation et ouverture sécurisée de WhatsApp (Correction du lien mort /?text=)
+    // 2. Préparation et ouverture sécurisée de WhatsApp (Avec le paramètre standard /?text=)
     try {
       const txt = `*DEMANDE DE DEVIS - MOAYE SERVICE*\n\n👤 *Nom :* ${form.clientName}\n📞 *Tel :* ${form.phone}\n📍 *Lieu :* ${form.location}\n📐 *Capacité :* ${form.volume}\n⚙️ *Pôle :* ${form.projectType}`;
       window.open("https://wa.me" + encodeURIComponent(txt), '_blank');

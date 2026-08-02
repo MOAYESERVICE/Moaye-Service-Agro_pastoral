@@ -2,6 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EspaceClient.css';
 
+// 🌟 CONFIGURATION DYNAMIQUE CLOUD AUTOMATIQUE : Connecté à votre tunnel ngrok actif
+const API_URL = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000' 
+  : 'https://ngrok-free.dev';
+
 export default function EspaceClient() {
   const navigate = useNavigate();
   const [profil, setProfil] = useState(null);
@@ -16,8 +21,8 @@ export default function EspaceClient() {
       return;
     }
 
-    // Extraction des informations en temps réel depuis PostgreSQL Cloud Supabase
-    fetch(`http://localhost:5000/api/client/profil?email=${encodeURIComponent(emailConnecte)}`)
+    // ☁️ Extraction des informations via la variable API globale (ngrok / localhost)
+    fetch(`${API_URL}/api/client/profil?email=${encodeURIComponent(emailConnecte)}`)
       .then(res => res.json())
       .then(resData => {
         if (resData.success && resData.data) {
@@ -182,37 +187,6 @@ export default function EspaceClient() {
         </div>
 
       </div>
-
-      {/* 3. SECTION SERVICES EN LIGNE ACCESSIBLES */}
-      <div className="services-online-section">
-        <h3>🛒 Services en Ligne Disponibles</h3>
-        <div className="services-action-grid">
-          
-          <div className="action-box">
-            <h4>Commander des Produits</h4>
-            <p>Sélectionner des produits frais de la ferme (volailles, maraîchers, poissons bio) ou engager une étude d'envergure.</p>
-            <div className="action-buttons-group">
-              <button className="primary-action-btn" onClick={() => navigate('/catalogue-commandes')}>Sélectionner des produits frais</button>
-              <button className="secondary-action-btn" onClick={() => navigate('/demande-devis')}>Valider un devis d'expertise</button>
-            </div>
-          </div>
-
-          <div className="action-box">
-            <h4>Support & Logistique</h4>
-            <p>Entrez en contact de messagerie direct avec la direction générale de Toumodi.</p>
-            <div className="action-buttons-group">
-              <a href="https://wa.me." target="_blank" rel="noopener noreferrer" className="whatsapp-action-btn">
-                💬 Message direct au manager
-              </a>
-              <button className="secondary-action-btn" onClick={() => alert('Ouverture du planning de livraison Moaye...')}>
-                📅 Consulter les plannings de livraison
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
     </div>
   );
 }
