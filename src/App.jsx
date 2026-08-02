@@ -20,25 +20,34 @@ const CatalogueCommandes = lazy(() => import('./page/CatalogueCommandes'));
 export default function App() {
   
   useEffect(() => {
-    // 🌟 FONCTION DE SUPPRESSION : S'exécute uniquement quand le site est 100% prêt
-    const supprimerLoaderHtml = () => {
-      const htmlLoader = document.getElementById('initial-html-loader');
+    // Fonction finale pour effacer le loader de l'écran
+    const effacerLoaderDefinitif = (htmlLoader) => {
       if (htmlLoader) {
-        htmlLoader.style.opacity = '0'; // Disparition fluide en fondu
+        htmlLoader.style.opacity = '0'; // Transition douce en fondu transparent
         setTimeout(() => {
-          if (htmlLoader) htmlLoader.remove(); // Supprime définitivement de l'écran
-        }, 250);
+          if (htmlLoader) htmlLoader.remove(); // Supprime proprement de la mémoire du mobile
+        }, 300);
       }
     };
 
-    // ⚡ VÉRIFICATION STRICTE DU CHARGEMENT
+    // Fonction qui lance le compte à rebours de sécurité une fois le site chargé
+    const handleSiteLoaded = () => {
+      const htmlLoader = document.getElementById('initial-html-loader');
+      
+      // 🌟 FORCE LE ROND À TOURNER PENDANT 1,5 SECONDE DE PLUS
+      // Cela donne le temps au processeur du téléphone d'afficher les images en arrière-plan
+      setTimeout(() => {
+        effacerLoaderDefinitif(htmlLoader);
+      }, 1500); 
+    };
+
+    // Vérification de l'état du navigateur
     if (document.readyState === 'complete') {
-      // Si par chance le téléphone a déjà tout fini de charger (images incluses), on coupe
-      supprimerLoaderHtml();
+      handleSiteLoaded();
     } else {
-      // 🌟 LE CŒUR DE VOTRE DEMANDE : On force le rond à tourner tant que l'événement "load" n'a pas dit que tout est prêt !
-      window.addEventListener('load', supprimerLoaderHtml);
-      return () => window.removeEventListener('load', supprimerLoaderHtml);
+      // Le rond tourne et attend que le réseau finisse, puis ajoute les 1,5s de sécurité
+      window.addEventListener('load', handleSiteLoaded);
+      return () => window.removeEventListener('load', handleSiteLoaded);
     }
   }, []);
 
