@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import './App.css';
 
-// 🌟 CORRECTION FLASH : La page d'accueil est importée normalement pour éviter le 2ème rond
+// Chargement direct de la page d'accueil pour une transition propre
 import Home from './page/Home';
 
-// Les autres pages lourdes restent en "Lazy" pour garder le site ultra-rapide sur mobile
+// Lazy loading des pages secondaires pour économiser la batterie du téléphone
 const Auth = lazy(() => import('./page/Auth')); 
 const ContactPage = lazy(() => import('./page/ContactPage'));
 const DemandeDevis = lazy(() => import('./page/DemandeDevis'));
@@ -20,19 +20,26 @@ const CatalogueCommandes = lazy(() => import('./page/CatalogueCommandes'));
 export default function App() {
   
   useEffect(() => {
-    // Supprime instantanément le premier rond d'attente HTML dès que la page d'accueil est prête
+    // 🌟 FONCTION DE SUPPRESSION : S'exécute uniquement quand le site est 100% prêt
     const supprimerLoaderHtml = () => {
       const htmlLoader = document.getElementById('initial-html-loader');
       if (htmlLoader) {
-        htmlLoader.style.opacity = '0';
+        htmlLoader.style.opacity = '0'; // Disparition fluide en fondu
         setTimeout(() => {
-          if (htmlLoader) htmlLoader.remove();
-        }, 200);
+          if (htmlLoader) htmlLoader.remove(); // Supprime définitivement de l'écran
+        }, 250);
       }
     };
-    
-    // Libération immédiate de l'écran
-    supprimerLoaderHtml();
+
+    // ⚡ VÉRIFICATION STRICTE DU CHARGEMENT
+    if (document.readyState === 'complete') {
+      // Si par chance le téléphone a déjà tout fini de charger (images incluses), on coupe
+      supprimerLoaderHtml();
+    } else {
+      // 🌟 LE CŒUR DE VOTRE DEMANDE : On force le rond à tourner tant que l'événement "load" n'a pas dit que tout est prêt !
+      window.addEventListener('load', supprimerLoaderHtml);
+      return () => window.removeEventListener('load', supprimerLoaderHtml);
+    }
   }, []);
 
   return (
@@ -40,16 +47,13 @@ export default function App() {
       <div className="app-container">
         <Navbar />
         
-        {/* Le Suspense gère désormais uniquement les transitions des pages secondaires */}
         <Suspense fallback={
           <div className="page-lazy-spinner-box">
             <div className="moaye-mini-spinner"></div>
           </div>
         }>
           <Routes>
-            {/* L'accueil s'affiche directement sans déclencher le 2ème spinner */}
             <Route path="/" element={<Home />} />
-            
             <Route path="/connexion" element={<Auth />} />
             <Route path="/nous-contacter" element={<ContactPage />} />
             <Route path="/demande-devis" element={<DemandeDevis />} />
