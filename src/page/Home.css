@@ -127,7 +127,6 @@
   width: 100% !important;
   margin-top: 1rem !important;
 }
-
 /* LE BOUTON DEVIS VERT DE LA MAQUETTE */
 .btn-green-devis-hero {
   display: inline-flex !important;
@@ -222,6 +221,121 @@
   .btn-consulter-engagements {
     width: 100% !important; /* S'étirent de manière égale et fluide sur la largeur de lecture */
     min-width: 280px !important;
+    justify-content: center !important;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE SMARTPHONE MOBILE (ALIGNEMENTS CENTRÉS)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 5rem 6% 6rem 6% !important;
+    min-height: 80vh !important;
+    background-position: center center !important;
+  }
+  .hero-content {
+    text-align: center !important;
+  }
+  .hero-badges-clean-layout {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 1.8rem !important;
+  }
+  .hero-tagline {
+    font-size: 0.8rem !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+  .hero-location {
+    margin: 0 !important;
+    display: inline-block !important;
+    width: max-content !important;
+  }
+  .hero-main-title {
+    font-size: 2rem !important;
+  }
+  .hero-text {
+    font-size: 1rem !important;
+    margin-bottom: 2rem !important;
+  }
+  .hero-cta-zone {
+    align-items: center !important;
+  }
+}
+
+
+/* BOUTON DÉCOUVRIR NOTRE VISION (IMAGE MODÈLE) */
+.farm-link-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #ffffff !important; /* Fond blanc pur */
+  color: #99cc33 !important;            /* Écriture vert olive clair */
+  border: 2px solid #111111 !important;  /* Fine bordure noire bien nette */
+  padding: 0 24px !important;           /* Format rectangulaire aéré */
+  border-radius: 6px !important;         /* Angles très légèrement adoucis */
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
+}
+
+.farm-link-btn:hover {
+  background-color: #fbfbfa !important;
+}
+
+/* STYLE DU BOUTON ENGAGEMENTS (IMAGE MODÈLE) */
+.btn-consulter-engagements {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  background: none !important; 
+  border: none !important;     
+  color: #558b2f !important;    /* Vrai vert vif signature */
+  font-weight: 700 !important;
+  font-size: 1.1rem !important;
+  text-decoration: none !important; 
+  cursor: pointer !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+  height: 48px !important;
+}
+
+.btn-consulter-engagements:hover {
+  opacity: 0.9;
+  transform: translateX(4px) !important;
+}
+
+/* ==========================================================================
+   CORRECTION CRITIQUE TABLETTES ET IPAD PRO (EMPILEMENT SÉCURISÉ)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-section {
+    padding-bottom: 7rem !important; /* Ajoute de l'air en bas pour ne pas écraser les CTA */
+  }
+
+  .hero-cta-zone {
+    flex-direction: column !important; /* Empile les boutons pour éviter qu'ils ne sortent de l'écran */
+    align-items: flex-start !important;
+    gap: 1rem !important;
+    width: auto !important;
+  }
+
+  .btn-green-devis-hero,
+  .farm-link-btn,
+  .btn-consulter-engagements {
+    width: 100% !important; /* S'étirent de manière égale et fluide sur la largeur de lecture */
+    min-width: 200px !important;
     justify-content: center !important;
   }
 }

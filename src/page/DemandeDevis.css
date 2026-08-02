@@ -1,306 +1,159 @@
-/* ==========================================================================
-   CHARTE DE DESIGN IMMERSIF ÉPURÉ APPLIQUÉE — FORMULAIRE DE DEVIS MOAYE
-   ========================================================================== */
-
-/* Conteneur global blanc pur comme la page expertise */
 .devis-page-container {
-  min-height: calc(100vh - 70px);
-  background: #ffffff !important; 
-  background-color: #ffffff !important; 
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  padding: 4rem 2rem !important;
+  min-height: 100vh;
+  background-color: #fcfbfa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  padding: 2rem 1rem;
   box-sizing: border-box;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  width: 100% !important;
 }
 
-/* Carte centrale du formulaire */
 .devis-form-card {
-  background-color: #ffffff !important;
-  padding: 3.5rem 0 !important; /* Pas d'ombre fermée, s'aligne proprement */
-  width: 100% !important;
-  max-width: 800px !important;
+  background-color: #ffffff;
+  padding: 2.2rem 2.5rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 850px;
   box-sizing: border-box;
-  position: relative;
-  border-top: 6px solid #558b2f !important; /* Ligne de tête vert vif */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.01);
 }
 
-/* Bouton retour vert vif */
-.devis-back-btn {
-  background: none !important;
-  border: none !important;
-  color: #558b2f !important; 
-  font-weight: 700 !important;
-  cursor: pointer !important;
-  font-size: 0.95rem !important;
-  margin-bottom: 2rem !important;
-  padding: 0 !important;
-  display: inline-block;
-  transition: transform 0.2s;
+/* --- STYLISATION DU TITRE RÉINTRODUIT --- */
+.devis-luxury-header {
+  text-align: left !important;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #edf2f7;
+  padding-bottom: 1rem;
 }
 
-.devis-back-btn:hover {
-  transform: translateX(-4px) !important;
-}
-
-/* En-tête des titres vert forêt */
-.devis-header-zone h2 {
-  color: #114314 !important; /* Vert forêt profond comme l'expertise */
-  font-size: 2.6rem !important;
+.devis-luxury-header h2 {
+  color: #114314 !important; /* Vert Moaye */
+  font-size: 1.8rem !important;
   font-weight: 800 !important;
-  margin: 0 0 0.6rem 0 !important;
-  letter-spacing: -0.5px;
+  margin: 0 0 0.4rem 0 !important;
+  text-align: left !important;
 }
 
-.devis-brand-tag {
-  font-size: 0.75rem !important;
-  font-weight: 800 !important;
-  color: #ff6e40 !important; /* Badge orange d'accent */
-  background-color: rgba(255, 110, 64, 0.08) !important; 
-  padding: 5px 12px !important;
-  border-radius: 4px !important;
-  display: inline-block;
-  text-transform: uppercase;
-  margin-bottom: 0.8rem;
-}
-
-.devis-subtitle {
-  color: #556655 !important; 
-  font-size: 1.05rem !important;
-  margin: 0 0 2rem 0 !important;
+.devis-top-intro-txt {
+  font-size: 0.95rem;
+  color: #4a5568;
   line-height: 1.5;
+  margin: 0;
 }
 
-/* Bloc d'avertissement avec repère à gauche */
-.devis-alert-info {
-  background-color: #ffffff !important; 
-  color: #333333 !important; 
-  padding: 1.5rem 0 1.5rem 2rem !important;
-  border-radius: 0 !important;
-  font-size: 1rem !important;
-  font-weight: 500 !important;
-  line-height: 1.6;
-  margin-bottom: 3.5rem !important;
-  border-left: 4px solid #558b2f !important; 
-}
-
-/* Structure globale du formulaire */
 .devis-structured-form {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1.5rem;
 }
 
-.devis-form-section {
-  border: none !important; /* Plus de contours de boîtes fermées */
-  padding: 0 !important;
-  margin: 0 !important;
+/* GRILLE DOUBLE COLONNE INPUTS */
+.devis-two-columns-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+  width: 100%;
+}
+
+.devis-form-block {
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
-  background-color: #ffffff !important; 
-}
-
-.devis-form-section legend {
-  font-size: 1.3rem !important;
-  font-weight: 700 !important;
-  color: #114314 !important; 
-  padding: 0 !important;
-  margin-bottom: 1.5rem !important;
-}
-
-.devis-form-row {
-  display: flex !important;
-  gap: 24px !important; /* Espacement horizontal fluide */
-  width: 100%;
+  gap: 0.8rem;
+  text-align: left;
 }
 
 .devis-input-group {
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 1 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 100%;
 }
 
-.devis-input-group.full-width {
-  width: 100% !important;
+.devis-input-group label,
+.devis-main-section-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 2px;
 }
 
-.devis-input-group label {
-  font-size: 0.95rem !important;
-  font-weight: 600 !important;
-  color: #222222 !important; /* Libellés sombres nets */
-  margin-bottom: 0.8rem !important;
-  display: block !important;
-}
-
-/* ==========================================================================
-   CHAMPS DE SAISIE AU REPOS : LE FOND EST BLANC PUR ET LISIBLE
-   ========================================================================== */
-.devis-input-group input,
-.devis-input-group textarea,
-.dropdown-selected-trigger {
-  width: 100% !important;
-  padding: 13px 16px !important;
-  border-radius: 8px !important;
-  font-size: 0.98rem !important;
-  color: #333333 !important;
-  box-sizing: border-box;
+.devis-input-group input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.92rem;
   outline: none;
-  font-family: inherit;
-
-  background-color: #ffffff !important; /* Toujours blanc pur */
-  border: 1px solid #cbd5e1 !important;  /* Fine ligne grise */
-  
-  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+  background-color: #ffffff;
+  box-sizing: border-box;
 }
+.devis-input-group input:focus { border-color: #114314; }
 
-/* Style des indications textuelles gris neutre doux */
-.devis-input-group input::placeholder,
-.devis-input-group textarea::placeholder {
-  color: #94a3b8 !important; /* Gris bleuté propre */
-  opacity: 1 !important;
-  transition: opacity 0.15s ease !important;
-}
-
-/* ==========================================================================
-   CHAMPS DE SAISIE AU CLIC : LE FOND RESTE BLANC, SEULE LA LIGNE PASSE AU VERT
-   ========================================================================== */
-.devis-input-group input:focus,
-.devis-input-group textarea:focus,
-.dropdown-selected-trigger:focus,
-.dropdown-selected-trigger.active {
-  background-color: #ffffff !important; /* STABLE : Aucun fond crème vert-jaune moche */
-  background: #ffffff !important;
-  
-  border-color: #558b2f !important; /* Allumage vert vif du contour */
-  box-shadow: 0 0 0 3px rgba(85, 139, 47, 0.12) !important; 
-}
-
-/* Disparition du texte indicatif dès que l'utilisateur clique ou écrit */
-.devis-input-group input:focus::placeholder,
-.devis-input-group textarea:focus::placeholder {
-  opacity: 0 !important;
-}
-
-/* ==========================================================================
-   MENU DÉROULANT DU SÉLECTEUR D'EXPERTISE
-   ========================================================================== */
-.custom-dropdown-container {
-  position: relative;
+/* 🟢 LA GRILLE DES 4 CARTES COMPACTES COLLÉES AU CORDEAU */
+.devis-options-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 colonnes x 2 lignes sur PC */
+  gap: 0.8rem;
   width: 100%;
 }
 
-.dropdown-selected-trigger {
-  text-align: left !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
+.moaye-radio-box-item {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+.moaye-radio-box-item input { position: absolute; opacity: 0; }
+
+.moaye-custom-radio-circle {
+  min-width: 15px; width: 15px; height: 15px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  margin-top: 3px;
 }
 
-.dropdown-arrow-icon {
-  font-size: 0.75rem;
-  color: #777777;
-  transition: transform 0.2s;
+.radio-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.radio-text-wrapper strong { font-size: 0.95rem; color: #1a202c; }
+.radio-text-wrapper p { font-size: 0.82rem; color: #718096; margin: 0; line-height: 1.3; }
+
+/* ÉTAT SÉLECTIONNÉ VERT FORET VIA RADIO CLICK */
+.moaye-radio-box-item.checked {
+  border-color: #114314 !important;
+  background-color: rgba(17, 67, 20, 0.01) !important;
+}
+.moaye-radio-box-item.checked .moaye-custom-radio-circle {
+  border-color: #114314; background-color: #114314; box-shadow: inset 0 0 0 2px #fff;
 }
 
-.dropdown-selected-trigger.active .dropdown-arrow-icon {
-  transform: rotate(180deg);
-}
+.global-err-msg { font-size: 0.85rem; font-weight: 700; color: #ff6e40; margin: 0; }
 
-.dropdown-options-list {
-  position: absolute;
-  top: calc(100% + 5px);
-  left: 0;
+.btn-devis-submit {
   width: 100%;
-  background-color: #ffffff !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 8px !important;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
-  z-index: 50;
-  max-height: 280px;
-  overflow-y: auto;
-  padding: 6px !important;
-  box-sizing: border-box;
+  background-color: #114314;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
 }
+.btn-devis-submit:hover { background-color: #0b2d0d; }
 
-.dropdown-each-option {
-  width: 100% !important;
-  padding: 12px 14px !important;
-  background: none !important;
-  border: none !important;
-  text-align: left !important;
-  font-size: 0.95rem !important;
-  color: #333333 !important;
-  cursor: pointer !important;
-  border-radius: 6px !important;
-  font-family: inherit;
-  transition: background-color 0.15s, color 0.15s;
-  white-space: normal !important; 
-  line-height: 1.4 !important;
-}
-
-.dropdown-each-option:hover {
-  background-color: #f1f8e9 !important; /* Survol vert clair */
-  color: #558b2f !important;
-}
-
-.dropdown-each-option.selected {
-  background-color: #558b2f !important;
-  color: #ffffff !important;
-}
-
-.devis-input-group textarea {
-  resize: vertical;
-  min-height: 110px;
-  line-height: 1.5;
-}
-
-/* Pied de page et grand bouton vert d'envoi */
-.devis-action-footer {
-  margin-top: 5rem !important;
-  background-color: #ffffff !important; 
-  padding: 2.5rem 0 !important;
-  text-align: center !important;
-  border-top: 1px solid #e2e8f0 !important; 
-  max-width: 100% !important;
-  width: 100% !important;
-  box-sizing: border-box;
-}
-
-.devis-action-footer p {
-  font-size: 1.1rem !important;
-  color: #111111 !important; 
-  margin: 0 0 1.5rem 0 !important;
-  font-weight: 700 !important;
-}
-
-.devis-submit-btn {
-  background-color: #558b2f !important; 
-  color: #ffffff !important;
-  border: none !important;
-  padding: 16px 36px !important;
-  border-radius: 8px !important;
-  font-weight: 700 !important;
-  font-size: 1rem !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 15px rgba(85, 139, 47, 0.15) !important;
-  display: inline-block;
-}
-
-.devis-submit-btn:hover {
-  background-color: #33691e !important;
-}
-
-/* ==========================================================================
-   RESPONSIVE MOBILE SMARTPHONES
-   ========================================================================== */
 @media (max-width: 768px) {
-  .devis-page-container { padding: 2rem 1rem !important; }
-  .devis-form-card { padding: 2.5rem 0 !important; }
-  .devis-header-zone h2 { font-size: 1.8rem !important; }
-  .devis-form-row { flex-direction: column !important; gap: 1.4rem !important; }
-  .devis-alert-info { padding: 1rem 0 1rem 1.2rem !important; }
+  .devis-form-card { padding: 1.5rem; }
+  .devis-two-columns-grid, .devis-options-cards-grid { grid-template-columns: 1fr; gap: 1rem; }
 }

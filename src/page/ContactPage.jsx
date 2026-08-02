@@ -9,12 +9,11 @@ export default function ContactPage() {
     fullName: '',
     phone: '',
     location: '',
-    serviceType: '', // Enregistre le titre du pôle sélectionné
+    serviceType: '', 
     surfaceArea: '',
     description: ''
   });
 
-  // Liste officielle des expertises Moaye Service
   const moayeExpertises = [
     { id: 'avi', title: 'Génie Avicole', desc: 'Pondeuses, poulets de chair, formulation d\'aliments' },
     { id: 'aqua', title: 'Ingénierie Aquacole', desc: 'Hors-sol, étangs, cages flottantes, pisciculture' },
@@ -22,7 +21,8 @@ export default function ContactPage() {
     { id: 'bureau', title: 'Bureau d\'Études', desc: 'Conception de projets, expertises et Business Plans' }
   ];
 
-  const handleMoayeSubmit = (e) => {
+  // 🌟 FONCTION CORRIGÉE POUR ATTENDRE LA RÉPONSE DU SERVEUR
+  const handleMoayeSubmit = async (e) => {
     e.preventDefault();
 
     if (!formData.serviceType) {
@@ -30,44 +30,40 @@ export default function ContactPage() {
       return;
     }
 
-    // 1. Envoi asynchrone en arrière-plan vers votre serveur backend Node.js
-    fetch('http://localhost:5000/api/devis', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-    .then((res) => res.json())
-    .catch((err) => {
-      // Évite de bloquer l'utilisateur si le serveur local n'est pas lancé
-      console.log("Note: Serveur backend injoignable, redirection forcée.", err);
-    });
+    try {
+      // On attend l'envoi effectif vers le serveur local
+      const response = await fetch('http://localhost:5000/api/devis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // 2. CORRECTIF TECHNIQUE : Remise à zéro immédiate du formulaire
-    setFormData({
-      fullName: '',
-      phone: '',
-      location: '',
-      serviceType: '',
-      surfaceArea: '',
-      description: ''
-    });
-    
-    // 3. SELECTION CRITIQUE : Redirection instantanée garantie à chaque clic
-    navigate('/confirmation-succes');
+      const data = await response.json();
+      
+      if (data.success) {
+        // Redirection uniquement après confirmation de sauvegarde
+        navigate('/confirmation-succes');
+      } else {
+        alert("Le serveur n'a pas pu enregistrer le message.");
+      }
+
+    } catch (err) {
+      console.log("Note: Serveur backend injoignable, redirection forcée.", err);
+      // Redirection de secours si le serveur est coupé
+      navigate('/confirmation-succes');
+    }
   };
 
   return (
     <div className="moaye-contact-wrapper">
       <div className="moaye-contact-card">
         
-        {/* BOUTON RETOUR ÉPURÉ */}
         <button className="moaye-back-link" onClick={() => navigate('/')}>
           ← Retour à l'accueil
         </button>
 
-        {/* EN-TÊTE DE LA PAGE */}
         <div className="moaye-contact-intro">
           <h2>Lancer une Étude de Projet</h2>
           <p>Bureau d'études techniques de <strong>Moaye Service Toumodi</strong>. Transmettez votre cahier des charges opérationnel.</p>
@@ -75,7 +71,6 @@ export default function ContactPage() {
 
         <form onSubmit={handleMoayeSubmit} className="moaye-structured-form">
           
-          {/* LIGNE DE SAISIE 1 */}
           <div className="moaye-form-row">
             <div className="moaye-input-container">
               <label>Nom Complet du Promoteur *</label>
@@ -102,7 +97,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* LIGNE DE SAISIE 2 */}
           <div className="moaye-form-row">
             <div className="moaye-input-container">
               <label>Localité du projet *</label>
@@ -129,7 +123,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* GRILLE INTERACTIVE SANS MENU DÉROULANT BLEU */}
           <div className="moaye-input-container full-width-field">
             <label className="section-field-label">Sélectionnez le pôle d'intervention technique *</label>
             
@@ -150,7 +143,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* ESPACE SPECIFICATIONS */}
           <div className="moaye-input-container full-width-field">
             <label>Détaillez vos exigences et votre calendrier *</label>
             <textarea 
@@ -162,7 +154,6 @@ export default function ContactPage() {
             ></textarea>
           </div>
 
-          {/* BOUTON D'ENVOI VERT OFFICIEL */}
           <button type="submit" className="moaye-submit-project-btn">
             Valider et envoyer le cahier des charges
           </button>

@@ -11,7 +11,6 @@ export default function Auth() {
 
   const val = (f, v) => setForm(p => ({ ...p, [f]: v }));
 
-  // 🟢 BASE DE DONNÉES COMPLÈTE DE TOUS LES PAYS POUR MOAYE SERVICE
   const pays = [
     { c: "+225", n: "Côte d'Ivoire", f: "🇨🇮" },
     { c: "+223", n: "Mali", f: "🇲🇱" },
@@ -31,85 +30,68 @@ export default function Auth() {
     { c: "+1", n: "États-Unis / Canada", f: "🇺🇸" }
   ];
 
-  // CONNECTÉ AU SERVEUR : Gestion de la soumission Inscription & Connexion
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (form.codeSecret.length !== 4) return alert("Le mot de passe doit contenir 4 chiffres.");
 
-    // Traitement du numéro de téléphone avec l'indicateur choisi (+22505...)
-    const telephoneComplet = `${pref.c}${form.tel}`;
-
-    if (mode === 'register') {
-      // 🔵 LOGIQUE D'INSCRIPTION : Envoi complet au Backend PostgreSQL
-      fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: form.nom,
-          clientType: form.type,
-          phone: telephoneComplet,
-          location: form.vill,
-          sector: form.sec,
-          services: form.srv,
-          projectSize: form.vol,
-          email: form.email,
-          password: form.codeSecret
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            alert("Compte client créé avec succès dans le Cloud ! Vous pouvez maintenant vous connecter.");
-            setMode('login'); // Bascule automatiquement vers l'écran de connexion
-          } else {
-            alert(data.message || "Erreur lors de l'inscription.");
-          }
-        })
-        .catch((err) => {
-          console.error("Erreur d'inscription :", err);
-          alert("Impossible de joindre le serveur de base de données.");
+    try {
+      if (mode === 'register') {
+        const response = await fetch('http://localhost:5000/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            fullName: form.nom,
+            clientType: form.type,
+            phone: `${pref.c} ${form.tel}`,
+            location: form.vill,
+            sector: form.sec,
+            services: form.srv,
+            projectSize: form.vol,
+            email: form.email,
+            password: form.codeSecret
+          })
         });
 
-    } else {
-      // 🟢 LOGIQUE DE CONNEXION : Vérification des identifiants au Backend
-      fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: form.email,
-          password: form.codeSecret
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            alert("Connexion réussie ! Welcome chez Moaye Service.");
-            localStorage.setItem('session_moaye_client', 'true');
-            localStorage.setItem('client_email', form.email);
-            navigate('/espace-client');
-            window.location.reload();
-          } else {
-            alert(data.message || "Adresse email ou code secret incorrect.");
-          }
-        })
-        .catch((err) => {
-          console.error("Erreur de connexion :", err);
-          alert("Erreur réseau ou serveur inaccessible.");
+        const data = await response.json();
+        if (data.success) {
+          alert("Compte créé avec succès ! Connectez-vous.");
+          setMode('login');
+        } else {
+          alert(data.message || "Erreur lors de l'inscription.");
+        }
+
+      } else {
+        const response = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: form.email, password: form.codeSecret })
         });
+
+        const data = await response.json();
+        if (data.success) {
+          localStorage.setItem('session_moaye_client', 'true');
+          localStorage.setItem('client_email', form.email);
+          navigate('/espace-client'); 
+        } else {
+          alert(data.message || "Identifiants incorrects.");
+        }
+      }
+    } catch (err) {
+      alert("Erreur : Le serveur local n'est pas démarré.");
     }
   };
 
   return (
     <div className="auth-page-container">
       <div className="auth-card-box" style={{ maxWidth: mode === 'register' ? '600px' : '420px' }}>
-        <button className="btn-back-home" onClick={() => navigate('/')}>← Retour</button>
+
         <h2>{mode === 'login' ? 'Espace Connexion' : 'Créer un compte'}</h2>
         <p className="auth-subtitle">Moaye Service — Plateforme Agropastorale & BTP</p>
 
         <form onSubmit={handleSubmit}>
           {mode === 'register' && (
             <>
-              <div className="auth-input-group"><label>Nom / Raison sociale *</label>
+              <div className="auth-input-group"><label>Nom / Entreprise*</label>
                 <input type="text" placeholder="Nom ou Entreprise" value={form.nom} onChange={e => val('nom', e.target.value)} required />
               </div>
 

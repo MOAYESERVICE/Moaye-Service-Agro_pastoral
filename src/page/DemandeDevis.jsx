@@ -5,55 +5,72 @@ import './DemandeDevis.css';
 export default function DemandeDevis() {
   const navigate = useNavigate();
   
-  // États du formulaire synchronisés avec le cahier des charges de Moaye Service
-  const [formData, setFormData] = useState({
-    clientName: '',
-    email: '',
-    phone: '',
-    location: '',
-    projectType: '',
-    exploitationSize: '',
-    message: ''
+  // Récupération de l'email de l'utilisateur connecté pour lier son devis
+  const emailSession = localStorage.getItem('client_email') || "ngorankoffimichael16@gmail.com";
+
+  const [form, setForm] = useState({
+    clientName: '', 
+    phone: '', 
+    location: '', 
+    volume: '', 
+    projectType: '', 
+    services: [], 
+    objectifs: '', 
+    terrainDispo: '', 
+    commentaires: ''
   });
 
-  // État de contrôle pour le sélecteur d'expertise personnalisé
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  // Liste des expertises officielles de Moaye Service
-  const expertisesList = [
-    { value: "Génie Avicole", label: "🐣 Génie Avicole (Pondeuses, poulets de chair, formulation d'aliments)" },
-    { value: "Ingénierie Aquacole", label: "🐟 Ingénierie Aquacole (Hors-sol, étangs, cages flottantes, pisciculture)" },
-    { value: "Bâtiments & Génie Civil", label: "🏗️ Bâtiments & Génie Civil (Infrastructures rurales, bâtiments scolaires PAPSE)" },
-    { value: "Bureau d'Études", label: "📊 Bureau d'Études (Conception de projets, expertises et Business Plans)" }
-  ];
-
-  const selectExpertise = (expertise) => {
-    setFormData({ ...formData, projectType: expertise.value });
-    setIsDropdownOpen(false);
+  const val = (f, v) => {
+    setForm(p => ({ ...p, [f]: v }));
+    if (errors[f]) setErrors(p => ({ ...p, [f]: false }));
   };
 
-  const handleDevisSubmit = (e) => {
+  const handleDevisSubmit = async (e) => {
     e.preventDefault();
+    let err = {};
+    if (!form.clientName) err.clientName = true;
+    if (!form.phone) err.phone = true;
+    if (!form.location) err.location = true;
+    if (!form.volume) err.volume = true;
+    if (!form.projectType) err.projectType = true;
 
-    // Préparation du texte structuré pour l'équipe technique de Moaye Service
-    const intro = "*DEMANDE DE DEVIS EN LIGNE - MOAYE SERVICE*\n\n";
-    const coordonnees = "👤 *Nom / Entreprise :* " + formData.clientName + "\n📧 *E-mail :* " + formData.email + "\n📞 *WhatsApp :* " + formData.phone + "\n📍 *Localisation :* " + formData.location + "\n\n";
-    const projet = "⚙️ *Type de Projet :* " + formData.projectType + "\n📐 *Taille Exploitation :* " + formData.exploitationSize + "\n\n";
-    const detail = "📝 *Spécifications :*\n" + formData.message;
-    
-    const textComplet = intro + coordonnees + projet + detail;
-    
-    // CORRECTION FINALE : URL WhatsApp standardisée avec le numéro en dur et sans accolades buguées
-    const urlOfficial = "https://wa.me" + encodeURIComponent(textComplet);
+    if (Object.keys(err).length > 0) return setErrors(err);
 
+    // 1. ☁️ Envoi asynchrone synchronisé avec l'Espace Client vers Supabase
     try {
-      // 1. Ouvre la discussion WhatsApp sur le bon numéro sans aucun plantage
-      window.open(urlOfficial, '_blank');
+      await fetch('http://localhost:5000/api/devis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientName: form.clientName,
+          email: emailSession, // 🌟 ESSENTIEL : Lie le devis à l'utilisateur connecté
+          phone: form.phone,
+          location: form.location,
+          projectType: form.projectType,
+          exploitationSize: form.volume, // Transmet la capacité saisie
+          message: `Demande formulée depuis la grille des pôles d'intervention pour le secteur : ${form.projectType}.`
+        })
+      });
+
+      // 🌟 TRANSFERT EN LOCAL: Permet une mise à jour visuelle immédiate dans l'Espace Client si nécessaire
+      localStorage.setItem('moaye_dernier_devis_pole', form.projectType);
+      localStorage.setItem('moaye_dernier_devis_capacite', form.volume);
+
     } catch (error) {
-      console.error("Erreur lors de l'ouverture de WhatsApp", error);
+      console.error("Note: Erreur réseau Supabase ignorée pour ne pas bloquer l'utilisateur.", error);
     }
 
-    // 2. Redirige immédiatement l'utilisateur vers ta page de confirmation de succès
+    // 2. Préparation et ouverture sécurisée de WhatsApp (Correction du lien mort /?text=)
+    try {
+      const txt = `*DEMANDE DE DEVIS - MOAYE SERVICE*\n\n👤 *Nom :* ${form.clientName}\n📞 *Tel :* ${form.phone}\n📍 *Lieu :* ${form.location}\n📐 *Capacité :* ${form.volume}\n⚙️ *Pôle :* ${form.projectType}`;
+      window.open("https://wa.me" + encodeURIComponent(txt), '_blank');
+    } catch (whatsappError) {
+      console.error("Note: Impossible de lancer WhatsApp.", whatsappError);
+    }
+    
+    // 3. ⚡ REDIRECTION FORCEE ET GARANTIE VERS LA PAGE DE SUCCÈS
     navigate('/confirmation-succes');
   };
 
@@ -61,152 +78,86 @@ export default function DemandeDevis() {
     <div className="devis-page-container">
       <div className="devis-form-card">
         
-        {/* Bouton retour vers l'accueil */}
         <button className="devis-back-btn" onClick={() => navigate('/')}>
           ← Retour à l'accueil
         </button>
 
-        <div className="devis-header-zone">
-          <h2>Demande de Devis En Ligne</h2>
-          <span className="devis-brand-tag">Moaye Service</span>
-          <p className="devis-subtitle">
-            Expertise Agro-pastorale, BTP & Services Divers — Solutions durables en Côte d'Ivoire
+        <div className="devis-luxury-header">
+          <h2>Demande de Devis</h2>
+          <p className="devis-top-intro-txt">
+            Bureau d'études techniques de <strong>Moaye Service Toumodi</strong>. Transmettez votre cahier des charges opérationnel.
           </p>
-          <div className="devis-alert-info">
-            Veuillez remplir les champs ci-dessous pour recevoir une estimation gratuite sous 48 heures.
-          </div>
         </div>
 
-        <form onSubmit={handleDevisSubmit} className="devis-structured-form">
+        <form onSubmit={handleDevisSubmit} className="devis-structured-form" noValidate>
           
-          {/* SECTION 1 : Vos Informations Personnelles */}
-          <fieldset className="devis-form-section">
-            <legend>1. Vos Informations Personnelles</legend>
+          <div className="devis-two-columns-grid">
+            <div className="devis-input-group">
+              <label>Nom Complet du Promoteur *</label>
+              <input type="text" placeholder="Veuillez écrire votre nom complet" className={errors.clientName ? 'err' : ''} value={form.clientName} onChange={e => val('clientName', e.target.value)} />
+            </div>
+
+            <div className="devis-input-group">
+              <label>Numéro de téléphone *</label>
+              <input type="tel" placeholder="Veuillez écrire votre numéro de téléphone" className={errors.phone ? 'err' : ''} value={form.phone} onChange={e => val('phone', e.target.value)} />
+            </div>
+
+            <div className="devis-input-group">
+              <label>Localité du projet *</label>
+              <input type="text" placeholder="Veuillez écrire la localité du projet" className={errors.location ? 'err' : ''} value={form.location} onChange={e => val('location', e.target.value)} />
+            </div>
+
+            <div className="devis-input-group">
+              <label>Superficie / Capacité visée *</label>
+              <input type="text" placeholder="Veuillez écrire les dimensions ou la capacité" className={errors.volume ? 'err' : ''} value={form.volume} onChange={e => val('volume', e.target.value)} />
+            </div>
+          </div>
+
+          <div className="devis-form-block">
+            <label className="devis-main-section-label">Sélectionnez le pôle d'intervention technique *</label>
             
-            <div className="devis-form-row">
-              <div className="devis-input-group">
-                <label>Nom complet ou Entreprise *</label>
-                <input 
-                  type="text" 
-                  autoComplete="off"
-                  placeholder="Veuillez écrire votre nom ou entreprise"
-                  value={formData.clientName}
-                  onChange={(e) => setFormData({...formData, clientName: e.target.value})}
-                  required 
-                />
-              </div>
+            <div className={`devis-options-cards-grid ${errors.projectType ? 'err-list' : ''}`}>
+              <label className={`moaye-radio-box-item ${form.projectType === 'Génie Avicole' ? 'checked' : ''}`}>
+                <input type="radio" name="pôle" checked={form.projectType === 'Génie Avicole'} onChange={() => val('projectType', 'Génie Avicole')} />
+                <div className="moaye-custom-radio-circle"></div>
+                <div className="radio-text-wrapper">
+                  <strong>Génie Avicole</strong>
+                  <p>Pondeuses, poulets de chair, formulation d'aliments</p>
+                </div>
+              </label>
 
-              <div className="devis-input-group">
-                <label>Adresse e-mail *</label>
-                <input 
-                  type="email" 
-                  autoComplete="off"
-                  placeholder="Veuillez écrire votre adresse e-mail"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  required 
-                />
-              </div>
+              <label className={`moaye-radio-box-item ${form.projectType === 'Ingénierie Aquacole' ? 'checked' : ''}`}>
+                <input type="radio" name="pôle" checked={form.projectType === 'Ingénierie Aquacole'} onChange={() => val('projectType', 'Ingénierie Aquacole')} />
+                <div className="moaye-custom-radio-circle"></div>
+                <div className="radio-text-wrapper">
+                  <strong>Ingénierie Aquacole</strong>
+                  <p>Hors-sol, étangs, cages flottantes, pisciculture</p>
+                </div>
+              </label>
+
+              <label className={`moaye-radio-box-item ${form.projectType === 'Bâtiment & Génie Civil' ? 'checked' : ''}`}>
+                <input type="radio" name="pôle" checked={form.projectType === 'Bâtiment & Génie Civil'} onChange={() => val('projectType', 'Bâtiment & Génie Civil')} />
+                <div className="moaye-custom-radio-circle"></div>
+                <div className="radio-text-wrapper">
+                  <strong>Bâtiment & Génie Civil</strong>
+                  <p>Infrastructures rurales, suivi de chantiers type PAPSE</p>
+                </div>
+              </label>
+
+              <label className={`moaye-radio-box-item ${form.projectType === "Bureau d'études" ? 'checked' : ''}`}>
+                <input type="radio" name="pôle" checked={form.projectType === "Bureau d'études"} onChange={() => val('projectType', "Bureau d'études")} />
+                <div className="moaye-custom-radio-circle"></div>
+                <div className="radio-text-wrapper">
+                  <strong>Bureau d'études</strong>
+                  <p>Business plans, rédaction de projets agropastoraux</p>
+                </div>
+              </label>
             </div>
+          </div>
 
-            <div className="devis-form-row">
-              <div className="devis-input-group">
-                <label>Numéro de téléphone (WhatsApp) *</label>
-                <input 
-                  type="tel" 
-                  autoComplete="off"
-                  placeholder="Veuillez écrire votre numéro WhatsApp"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                  required 
-                />
-              </div>
-
-              <div className="devis-input-group">
-                <label>Localisation de la ferme / du projet *</label>
-                <input 
-                  type="text" 
-                  autoComplete="off"
-                  placeholder="Veuillez écrire la localisation du projet"
-                  value={formData.location}
-                  onChange={(e) => setFormData({...formData, location: e.target.value})}
-                  required 
-                />
-              </div>
-            </div>
-          </fieldset>
-
-          {/* SECTION 2 : Détails de la Prestation Souhaitée */}
-          <fieldset className="devis-form-section">
-            <legend>2. Détails de la Prestation Souhaitée</legend>
-            
-            <div className="devis-input-group full-width">
-              <label>Type de projet / Axe d'intervention *</label>
-              
-              <div className="custom-dropdown-container">
-                <button 
-                  type="button"
-                  className={`dropdown-selected-trigger ${isDropdownOpen ? 'active' : ''}`}
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  {formData.projectType 
-                    ? expertisesList.find(item => item.value === formData.projectType)?.label 
-                    : "-- Sélectionnez l'expertise demandée --"}
-                  <span className="dropdown-arrow-icon">▼</span>
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="dropdown-options-list">
-                    {expertisesList.map((item, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        className={`dropdown-each-option ${formData.projectType === item.value ? 'selected' : ''}`}
-                        onClick={() => selectExpertise(item)}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className="devis-input-group full-width">
-              <label>Taille actuelle ou prévue de l'exploitation *</label>
-              <input 
-                type="text" 
-                autoComplete="off"
-                placeholder="Veuillez écrire la taille ou dimension de l'exploitation"
-                value={formData.exploitationSize}
-                onChange={(e) => setFormData({...formData, exploitationSize: e.target.value})}
-                required 
-              />
-            </div>
-          </fieldset>
-
-          {/* SECTION 3 : Votre Message / Spécifications */}
-          <fieldset className="devis-form-section">
-            <legend>3. Votre Message / Spécifications</legend>
-            <div className="devis-input-group full-width">
-              <label>Décrivez précisément vos exigences et votre calendrier *</label>
-              <textarea 
-                rows="4" 
-                placeholder="Veuillez écrire les détails et spécifications de votre demande ici..."
-                value={formData.message}
-                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                required
-              ></textarea>
-            </div>
-          </fieldset>
-
-          {/* BOUTON VERT D'ENVOI */}
-          <button type="submit" className="devis-submit-btn">
-            🖥️ Envoyer la demande de devis
-          </button>
-
+          {Object.keys(errors).length > 0 && <p className="global-err-msg">❌ Veuillez remplir correctement tous les champs obligatoires.</p>}
+          <button type="submit" className="btn-devis-submit">VALIDER ET ENVOYER LE CAHIER DES CHARGES</button>
         </form>
-
       </div>
     </div>
   );

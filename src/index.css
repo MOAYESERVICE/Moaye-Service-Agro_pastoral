@@ -285,11 +285,6 @@
   }
 }
 
-
-
-
-
-
 /* ===================================================
    SECTION FERME DE PRODUITS FRAIS (STYLE MAQUETTE EN DAMIER)
    =================================================== */
@@ -340,6 +335,7 @@
 /* Alignement Flexbox côte à côte pour les blocs */
 .farm-flex-container {
   display: flex !important;
+  flex-direction: row !important;
   justify-content: space-between !important;
   align-items: center !important;
   gap: 6rem !important;
@@ -388,6 +384,9 @@
   font-size: 1rem !important;
   transition: color 0.2s;
   display: inline-block;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .farm-link-btn:hover {
@@ -396,14 +395,15 @@
 
 .farm-right-image {
   flex: 0.9 !important;
+  width: 100% !important;
 }
 
-/* Ajustement des images de la maquette */
+/* Ajustement des images de la maquette pour ordinateur */
 .farm-pic-style {
   width: 100% !important;
   height: 440px !important;
   object-fit: cover !important;
-  border-radius: 4px !important; /* Coins carrés très légèrement adoucis */
+  border-radius: 4px !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 }
 
@@ -411,14 +411,197 @@
    ADAPTATION PORTABLE (RESPONSIVE SUR MOBILE)
    =================================================== */
 @media (max-width: 768px) {
+  .farm-presentation-section {
+    padding: 4rem 6% !important; 
+  }
+
+  .farm-center-header {
+    margin-bottom: 3rem !important;
+  }
+
+  .farm-center-header h2 {
+    font-size: 1.8rem !important; 
+  }
+
   .farm-big-intro {
-    font-size: 1.3rem !important;
-    line-height: 1.4 !important;
+    font-size: 1.15rem !important;
+    line-height: 1.5 !important;
   }
   
-  .farm-flex-container {
-    flex-direction: column !important; /* Force l'empilement vertical sur smartphone */
-    gap: 3rem !important;
+  .mb-24 {
+    margin-bottom: 4rem !important;
+  }
+
+  /* Transformation Grid pour la réorganisation ordonnée des composants */
+  .farm-flex-container,
+  .farm-flex-container.row-reverse-desktop {
+    display: grid !important;
+    grid-template-columns: 100% !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Isolation ciblée des éléments textuels */
+  .farm-flex-container .farm-left-content {
+    display: contents !important;
+  }
+
+  /* Hiérarchie mobile stricte */
+  .farm-flex-container .farm-left-content h3 { 
+    order: 1 !important; 
+    font-size: 1.4rem !important; 
+    color: #163321 !important;
+    margin: 0 !important;
+  }
+  
+  .farm-flex-container .farm-left-content p { 
+    order: 2 !important; 
+    font-size: 0.95rem !important; 
+    margin: 0 !important;
+    line-height: 1.6 !important;
+  }
+  
+  .farm-flex-container .farm-right-image { 
+    order: 3 !important; 
+    width: 100% !important;
+    margin-top: 0.5rem !important;
+  }
+  
+  /* Ajustement de l'image pour éviter absolument toute coupure sur mobile */
+  .farm-pic-style {
+    height: auto !important; 
+    max-height: 380px !important; 
+    object-fit: contain !important; 
+    border-radius: 8px !important;
+    background-color: #ffffff !important;
+  }
+
+  /* Bouton isolé et calé proprement sous la photo du chantier */
+  .farm-flex-container .farm-left-content .farm-link-btn {
+    order: 4 !important; 
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 90% !important;
+    max-width: 320px !important;
+    margin: 0.5rem auto 0 auto !important;
+    padding: 12px 24px !important;
+    box-sizing: border-box !important;
+    border: 1px solid #163321 !important; 
+    border-radius: 24px !important;
+    background-color: #ffffff !important;
+  }
+}
+
+
+
+
+/* ==========================================================================
+   🧱 2. DESIGN DE LA SECTION NOS DOMAINES D'EXPERTISE (CARTES PARFAITES)
+   ========================================================================== */
+.expertise-section {
+  padding: 6rem 12% !important;
+  background-color: #fcfbfa !important; /* Fond crème doux pour découper les blocs */
+  text-align: center !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.expertise-header {
+  margin-bottom: 4rem !important;
+  text-align: center !important;
+}
+
+.expertise-header h2 {
+  color: #163321 !important; /* Même vert sombre */
+  font-size: 2.3rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 1rem 0 !important;
+}
+
+.expertise-subtitle {
+  color: #44544a !important;
+  font-size: 1.05rem !important;
+  margin: 0 !important;
+}
+
+/* Grille principale : Force l'alignement et la hauteur identique pour toutes les cartes */
+.expertise-grid {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: stretch !important; /* Force une hauteur 100% identique partout */
+  gap: 1.5rem !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+/* 🟢 RESTAURATION DES VRAIES CARTES BLANCHES ET COMPACTES */
+.expertise-card {
+  flex: 1 !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important; /* Contour gris très fin */
+  border-radius: 12px !important; /* Coins arrondis discrets */
+  padding: 26px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  box-sizing: border-box !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01) !important;
+  transition: all 0.25s ease-in-out !important;
+}
+
+.expertise-card h3 {
+  color: #163321 !important;
+  font-size: 1.35rem !important;
+  font-weight: 700 !important;
+  margin: 0 0 0.8rem 0 !important;
+  text-align: left !important;
+  line-height: 1.3 !important;
+  min-height: 40px !important; /* Verrouille la hauteur du titre */
+}
+
+.expertise-card p {
+  color: #44544a !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  margin: 0 0 2rem 0 !important;
+  text-align: left !important;
+  flex-grow: 1 !important; /* 🟢 Pousse le bouton au fond de manière égale partout */
+}
+
+/* 🟢 STYLE DU BOUTON EN SAVOIR PLUS DANS LES CARTES */
+.btn-know-more {
+  color: #8cb83e !important; /* Reste fidèle à votre couleur d'origine */
+  font-weight: 700 !important;
+  font-size: 0.95rem !important;
+  text-decoration: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  margin-top: auto !important; /* Alignement horizontal sur le même fil */
+  transition: color 0.15s ease, transform 0.15s ease !important;
+  width: max-content !important;
+}
+
+.expertise-card:hover {
+  border-color: #8cb83e !important; /* S'illumine au survol */
+  transform: translateY(-4px) !important; /* Petite élévation fluide */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.04) !important;
+}
+
+.expertise-card:hover .btn-know-more {
+  color: #163321 !important;
+}
+
+/* ==========================================================================
+   ⚙️ 3. CONFIGURATION RESPONSIVE DE SÉCURITÉ POUR MOBILES & PETITS ÉCRANS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .farm-big-intro, .expertise-header h2 {
+    font-size: 1.3rem !important;
+    line-height: 1.4 !important;
   }
   
   .mb-24 {
@@ -426,86 +609,49 @@
   }
   
   .farm-pic-style {
-    height: 300px !important; /* Image un peu plus compacte sur mobile */
-  }
-}
-
-
-
-
-
-
-
-.hero-img {
-  width: 100%;
-  max-width: 250px;
-  height: auto;
-  border-radius: 24px;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-  
-  /* Ajout d'une transition fluide lors du changement de source */
-  transition: src 0.5s ease-in-out, opacity 0.5s ease-in-out;
-  
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-  animation: floatMovement 4s ease-in-out infinite !important;
-}
-/* Conteneur de l'image préparé pour accueillir les flèches */
-.hero-image-container {
-  position: relative !important;
-}
-
-/* On force l'affichage des flèches au survol de la souris */
-.hero-image-container:hover button {
-  opacity: 1 !important;
-}
-
-/* Style des flèches interactives du carrousel */
-.hero-image-container button {
-  border: none !important;
-  outline: none !important;
-  user-select: none !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-/* --- CODE À AJOUTER TOUT EN BAS DE INDEX.CSS --- */
-
-.hero-image-container {
-  position: relative !important;
-}
-
-
-
-
-/* ===================================================
-   ADAPTATION PORTABLE (FORCER L'EMPILLEMENT DU MODÈLE)
-   =================================================== */
-@media (max-width: 768px) {
-
-  /* Force le texte et l'image à s'empiler verticalement sur une seule colonne */
-  .farm-flex-container {
-    flex-direction: column !important; 
-    gap: 2.5rem !important; /* Espace régulier entre le texte et l'image comme le modèle */
-    width: 100% !important;
-  }
-
-  /* Annule toute inversion pour que l'ordre reste naturel (Texte puis Image) */
-  .farm-flex-container.mb-24,
-  .farm-flex-container:nth-of-type(2) {
-    flex-direction: column !important;
-  }
-
-  /* Ajuste les marges de la section pour l'aérer sur smartphone */
-  .farm-presentation-section {
-    padding: 3rem 6% !important;
-  }
-
-  /* Ajuste la taille de la photo sur l'écran du téléphone */
-  .farm-pic-style {
-    width: 100% !important;
-    height: 320px !important; /* Hauteur idéale sur mobile comme sur ta photo */
+    height: 300px !important;
     border-radius: 8px !important;
+    object-fit: cover !important;
+  }
+
+  .farm-left-content, .farm-right-image {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  /* 🟢 FORCE LE TEXTE DU BLOC 1 À PASSER AU-DESSUS DE L'IMAGE */
+  .farm-presentation-section .farm-flex-container.block-vision-mobile {
+    display: flex !important;
+    flex-direction: column-reverse !important; /* Inversion : Texte en haut, image en bas */
+    gap: 1.5rem !important;
+  }
+
+  /* 🟢 MAINTIENT LE TEXTE DU BLOC 2 AU-DESSUS DE L'IMAGE */
+  .farm-presentation-section .farm-flex-container.block-engagements-mobile {
+    display: flex !important;
+    flex-direction: column !important; /* Empilement : Texte en haut, image en bas */
+    gap: 1.5rem !important;
+  }
+
+  .farm-left-content h3 { font-size: 1.4rem !important; text-align: left; }
+  .farm-left-content p { font-size: 0.95rem !important; text-align: left; }
+
+  .farm-presentation-section button.farm-link-btn {
+    margin: 1rem 0 0 0 !important;
+    justify-content: flex-start !important;
+  }
+
+  /* RESPONSIVE EXPERTISES MOBILE */
+  .expertise-grid {
+    flex-direction: column !important; /* S'empilent verticalement sur smartphone */
+    gap: 1.5rem !important;
+  }
+  .expertise-card {
+    padding: 20px 18px !important;
+    min-height: auto !important;
+  }
+  .expertise-card h3 {
+    min-height: auto !important;
   }
 }
 
@@ -665,138 +811,128 @@
   }
 }
 /* ==========================================================================
-   NETTOYAGE RADICAL : SUPPRESSION FINALE DES CARTES ET APPLATISSEMENT PREMIUM
+   RESTAURATION DES CARTES SÉCURISÉES — MODÈLE DE STANDING ALIGNÉ AU PIXEL
    ========================================================================== */
 
 .expertise-section {
-  background-color: #fcfbfa !important; 
-  background: #fcfbfa !important;
-  padding: 6rem 10% !important; /* Marges de standing alignées sur votre Navbar */
+  background-color: #fcfbfa !important; /* Fond crème doux signature */
+  padding: 5rem 10% !important; /* Marges alignées sur votre Navbar */
   width: 100% !important;
   box-sizing: border-box !important;
 }
 
-/* En-tête de section minimaliste */
 .expertise-header {
   text-align: center !important;
-  margin-bottom: 5rem !important;
+  margin-bottom: 4rem !important;
 }
 
-/* GRAND TITRE : Vert Forêt Institutionnel Profond */
 .expertise-header h2 {
-  font-size: 2.8rem !important;
-  color: #114314 !important; 
+  font-size: 2.6rem !important;
+  color: #114314 !important; /* Vert forêt institutionnel profond */
   font-weight: 800 !important;
-  margin: 0 0 0.6rem 0 !important;
+  margin: 0 0 0.5rem 0 !important;
   letter-spacing: -0.5px !important;
 }
 
 .expertise-subtitle {
   font-size: 1.05rem !important;
-  color: #556655 !important; /* Gris-vert doux */
-  margin: 0 auto !important;
-  max-width: 750px !important;
-  line-height: 1.5 !important;
+  color: #556655 !important;
+  margin: 0 !important;
 }
 
-/* GRILLE HORIZONTALE DISCRÈTE À 3 COLONNES SÉPARÉES PAR DES LIGNES */
+/* 🟢 Force toutes les cartes de la grille à s'étirer à la même hauteur */
 .expertise-grid {
-  display: grid !important;
-  grid-template-columns: repeat(3, 1fr) !important; 
-  width: 100% !important;
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: stretch !important; /* Force une hauteur 100% identique pour toutes les boîtes */
+  gap: 1.5rem !important; /* Espacement serré et géométrique entre les cartes */
   max-width: 1200px !important;
   margin: 0 auto !important;
+  width: 100% !important;
   box-sizing: border-box !important;
 }
 
-/* LES BLOCS : PLUS DE CARTES, PLUS D'ARRONDIS, PLUS DE FOND BLANC SUR CRÈME */
+/* 🟢 LE RETOUR DES VRAIES CARTES BLANCHES COMPACTES ET VISIBLES */
 .expertise-card {
-  background-color: transparent !important; /* Suppression complète du fond de la carte */
-  background: transparent !important;
-  border: none !important; /* Plus de bordure fermée */
-  border-radius: 0 !important; /* Plus d'arrondis lourds */
-  padding: 0 2.5rem !important; /* Espace respirant entre les blocs */
+  flex: 1 !important;
+  background-color: #ffffff !important; /* Fond blanc pur très visible */
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important; /* Ligne de contour grise fine et nette */
+  border-radius: 12px !important; /* Coins légèrement arrondis haut de gamme */
+  padding: 26px 22px !important; /* Espace respirant interne */
   display: flex !important;
-  flex-direction: column !important;
+  flex-direction: column !important; /* Aligne les éléments du haut vers le bas */
   justify-content: flex-start !important;
   box-sizing: border-box !important;
-  box-shadow: none !important; /* Éradication des ombres */
-  transition: transform 0.2s ease !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02) !important; /* Ombre de relief infime */
+  transition: all 0.25s ease-in-out !important;
 }
 
-/* Séparation par fines lignes verticales entre les blocs (comme dans les grands journaux) */
+/* Pas de ligne séparatrice entre les cartes fermées */
 .expertise-card:not(:last-child) {
-  border-right: 1px solid #e2e8f0 !important; /* Ligne de séparation fine et élégante */
+  border-right: 1px solid #e2e8f0 !important;
 }
 
-/* Interaction au survol ultra-discrète */
-.expertise-card:hover {
-  transform: translateY(-2px) !important; /* Micro-soulignement fluide */
-  background-color: transparent !important; /* Aucun changement de fond moche */
-}
-
-/* Titres des expertises en noir neutre et très pro */
+/* TITRES : Bloqués au même niveau supérieur */
 .expertise-card h3 {
-  font-size: 1.4rem !important;
-  color: #111111 !important; 
+  font-size: 1.35rem !important;
+  color: #111111 !important;
   font-weight: 700 !important;
-  margin: 0 0 1rem 0 !important;
+  margin: 0 0 0.8rem 0 !important;
+  text-align: left !important;
   line-height: 1.3 !important;
+  min-height: 40px !important; /* Verrouille la hauteur du titre */
 }
 
-/* Paragraphes de description fluides */
+/* PARAGRAPHES : Forcés à occuper tout le vide pour pousser le bouton */
 .expertise-card p {
-  font-size: 0.98rem !important;
-  color: #4a5568 !important; /* Gris foncé corporatif très lisible */
+  font-size: 0.95rem !important;
+  color: #4a5568 !important; /* Gris corporatif très lisible */
   line-height: 1.6 !important;
   margin: 0 0 2rem 0 !important;
+  text-align: left !important;
+  flex-grow: 1 !important; /* 🟢 Pousse le bouton au fond de la carte de manière égale partout */
 }
 
-/* LIEN EN SAVOIR PLUS : Vrai Vert Vif Éclatant de votre charte */
+/* BOUTON EN SAVOIR PLUS : Verrouillé sur la même ligne horizontale */
 .btn-know-more {
-  color: #558b2f !important; 
-  background: none !important;
-  border: none !important;
-  padding: 0 !important;
+  color: #558b2f !important; /* Vrai Vert Vif Éclatant de votre charte */
   font-weight: 700 !important;
-  font-size: 0.98rem !important;
-  cursor: pointer !important;
-  text-align: left !important;
+  font-size: 0.95rem !important;
   text-decoration: none !important;
   display: inline-flex !important;
   align-items: center !important;
+  margin-top: auto !important; /* 🟢 Verrouille l'alignement horizontal sur le même fil */
   transition: color 0.15s ease, transform 0.15s ease !important;
   width: max-content !important;
-  margin-top: auto !important; /* Aligne les liens pile sur la même ligne en bas */
 }
 
-/* Allumage au survol du lien */
-.btn-know-more:hover {
-  color: #114314 !important; /* Passe au vert forêt profond */
-  transform: translateX(4px) !important; /* Petit glissement de la flèche */
+/* 🟢 EFFET TACTILE CHIC AU SURVOL DE LA CARTE */
+.expertise-card:hover {
+  border-color: #114314 !important; /* Le contour fin passe au Vert Forêt */
+  transform: translateY(-4px) !important; /* Légère élévation fluide pro */
+  box-shadow: 0 12px 30px rgba(17, 67, 20, 0.05) !important; /* Ombre crème-vert discrète */
 }
 
-/* ==========================================================================
-   RESPONSIVE SECURISE SMARTPHONES (PASSAGE EN LIGNES HORIZONTALES NETTES)
-   ========================================================================== */
+.expertise-card:hover .btn-know-more {
+  color: #114314 !important; /* Le bouton passe au vert forêt profond */
+}
+
+/* Responsive mobile pour les smartphones */
 @media (max-width: 992px) {
   .expertise-grid {
-    grid-template-columns: 1fr !important; /* S'empilent verticalement sur mobile */
-    gap: 3rem !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
   }
-  
   .expertise-card {
-    padding: 0 0 2rem 0 !important;
-    border-right: none !important;
+    padding: 20px 18px !important;
+    min-height: auto !important;
   }
-  
-  .expertise-card:not(:last-child) {
-    border-bottom: 1px solid #e2e8f0 !important; /* Ligne horizontale sur mobile */
+  .expertise-card h3 {
+    min-height: auto !important;
   }
 }
-
-
-
 
 /* ==========================================================================
    RACCORDEMENT SANS TRANSITION AVEC LE CATALOGUE OPÉRATIONNEL
@@ -1217,3 +1353,5 @@
     text-align: center !important;
   }
 }
+
+

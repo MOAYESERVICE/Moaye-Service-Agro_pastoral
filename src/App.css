@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. VARIABLES GLOBALES ET THÈME DE MOAYE SERVICE
+   ========================================================================== */
 :root {
   --green-moaye: #1b5e20;
   --green-hover: #114314;
@@ -8,8 +11,62 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: white;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #ffffff;
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; /* Évite tout bug de défilement horizontal sur mobile */
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   2. REINITIALISATION ET STABILITÉ DU LOADER INITIAL HTML
+   ========================================================================== */
+.global-site-loader-wrapper {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ==========================================================================
+   3. OPTIMISATION MICRO-CHARGEMENTS EN DIRECT (LAZY INTER-PAGES)
+   ========================================================================== */
+
+/* Conteneur du mini-chargeur invisible ou ultra-rapide entre deux clics */
+.page-lazy-spinner-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 60vh;
+  box-sizing: border-box;
+}
+
+/* Le petit indicateur circulaire vert officiel de transition */
+.moaye-mini-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3.5px solid #eaeded;          /* Piste circulaire grise claire */
+  border-top-color: var(--green-hover); /* Arc de cercle vert Moaye Service */
+  border-radius: 50%;                   /* Cercle parfait */
+  animation: pageSpin 0.7s linear infinite; /* Rotation continue ultra-rapide */
+  will-change: transform;               /* Force le processeur mobile à rester fluide */
+}
+
+/* Calcul mathématique de l'animation de rotation de base */
+@keyframes pageSpin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import './Navbar.css';
 import { User, Menu, X, MessageCircle } from 'lucide-react'; 
 import logoImg from '../assets/logo.png'; 
-// CORRECTION : Ajout de useLocation et useNavigate pour la fermeture logique
 import { Link, useLocation, useNavigate } from 'react-router-dom'; 
 
 export default function Navbar() {
@@ -10,12 +9,31 @@ export default function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Fonction magique de gestion du clic sur l'icône utilisateur
+  // Fonction de gestion du clic sur l'icône utilisateur
   const handleAccountClick = () => {
     if (location.pathname === '/connexion') {
-      navigate('/'); // Si on est déjà sur la page, le clic la "renferme" et retourne à l'accueil
+      navigate('/'); 
     } else {
-      navigate('/connexion'); // Sinon, on ouvre la page de connexion
+      navigate('/connexion'); 
+    }
+  };
+
+  // Fonction pour faire défiler la page d'accueil vers les sections spécifiques
+  const handleScrollToSection = (sectionId) => {
+    setIsOpen(false);
+    
+    // Si on n'est pas sur la page d'accueil, on y va d'abord
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Petit délai pour laisser le temps à la page d'accueil de se charger
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      // Si on est déjà sur l'accueil, on défile directement
+      const element = document.getElementById(sectionId);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -43,29 +61,43 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* 2. Liens au milieu */}
+      {/* 2. Liens au milieu corrigés avec la navigation React */}
       <ul className={`navbar-links ${isOpen ? 'active' : ''}`} style={{ display: 'flex', listStyle: 'none', gap: '2.5rem', margin: 0, padding: 0, alignItems: 'center' }}>
-        <li><a href="#accueil" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: '#333333', fontWeight: '600', fontSize: '0.95rem' }}>Accueil</a></li>
-        <li><a href="#services" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: '#333333', fontWeight: '600', fontSize: '0.95rem' }}>Services</a></li>
-        <li><a href="#expertises" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: '#333333', fontWeight: '600', fontSize: '0.95rem' }}>Expertises</a></li>
-        <li><a href="#contact" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: '#333333', fontWeight: '600', fontSize: '0.95rem' }}>Contact</a></li>
+        <li>
+          <Link to="/" onClick={() => setIsOpen(false)} style={{ textDecoration: 'none', color: '#333333', fontWeight: '600', fontSize: '0.95rem' }}>
+            Accueil
+          </Link>
+        </li>
+        <li>
+          <button onClick={() => handleScrollToSection('services')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#333333', fontWeight: '600', fontSize: '0.95rem', fontFamily: 'inherit' }}>
+            Services
+          </button>
+        </li>
+        <li>
+          <button onClick={() => handleScrollToSection('expertises')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#333333', fontWeight: '600', fontSize: '0.95rem', fontFamily: 'inherit' }}>
+            Expertises
+          </button>
+        </li>
+        <li>
+          <button onClick={() => handleScrollToSection('contact')} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', color: '#333333', fontWeight: '600', fontSize: '0.95rem', fontFamily: 'inherit' }}>
+            Contact
+          </button>
+        </li>
       </ul>
 
       {/* 3. Actions de droite */}
       <div className="navbar-right-actions">
         
-        {/* CORRECTION DU BOUTON : Devient un interrupteur intelligent */}
         <button 
           onClick={handleAccountClick}
           className={`nav-icon-btn account-btn ${location.pathname === '/connexion' ? 'active' : ''}`} 
           aria-label="Mon Compte / Fermer"
-          style={{ border: 'none', cursor: 'pointer' }}
+          style={{ border: 'none', cursor: 'pointer', background: 'none' }}
         >
           {location.pathname === '/connexion' ? <X size={20} /> : <User size={20} />}
         </button>
 
-        {/* Le bouton vert redirige vers la page de formulaire */}
-        <Link to="/nous-contacter" className="btn-whatsapp-pill">
+        <Link to="/nous-contacter" className="btn-whatsapp-pill" style={{ textDecoration: 'none' }}>
           <span className="whatsapp-bubble-icon">
             <MessageCircle size={18} />
           </span>

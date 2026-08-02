@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Home.css';
-// CORRECTION 1 : Importation obligatoire de Link pour éviter l'écran blanc
-import { Link } from 'react-router-dom';
 
 // Importation de vos photos locales
 import heroImg from '../assets/hero.png'; 
@@ -9,17 +8,14 @@ import yaSimeonImg from '../assets/YaSimeon.png';
 import pindadImg from '../assets/Pindad.png';
 import gervaisonImg from '../assets/gervaison.png';
 import batiment2Img from '../assets/batiment2.png';
-import  travail1Img from '../assets/travail1.png';
-import  poulail1Img from '../assets/poulail1.png';
+import travail1Img from '../assets/travail1.png';
+import poulail1Img from '../assets/poulail1.png';
 import aqualcultureImg from '../assets/aqualculture.png';
-
-
-import  tuyauxImg from '../assets/tuyaux.png';
-
-
+import tuyauxImg from '../assets/tuyaux.png';
+import travail4Img from '../assets/travail4.png';
 
 export default function Home() {
-  // CORRECTION 2 : Création du tableau d'images pour le carrousel de droite
+  const navigate = useNavigate(); // 🟢 Activé pour le retour dynamique à la section précédente
   const imagesCarousel = [pindadImg, heroImg, gervaisonImg];
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -64,7 +60,7 @@ export default function Home() {
       titre: "Préparation des structures",
       localisation: "Yamoussoukro",
       desc: "Perçage et calibrage des tubes en PVC rigide directement sur le terrain. Ces tuyaux serviront de supports solides pour maintenir nos filets et sécuriser les installations",
-      img:  tuyauxImg
+      img: tuyauxImg
     }
   ];
 
@@ -153,8 +149,9 @@ export default function Home() {
           <span>DÉVELOPPEMENT DURABLE — </span>
         </div>
       </div>
-       <section className="farm-presentation-section">
-        <div className="farm-center-header">
+           {/* 3. SECTION PRÉSENTATION DE LA FERME */}
+      <section className="farm-presentation-section">
+        <div className="farm-center-header reveal-element">
           <h2>L'Excellence Technique à <span className="handwritten-green">Toumodi</span></h2>
           <p className="farm-big-intro">
             Nous pilotons un écosystème avicole moderne de 40 000 pondeuses, développons l'ingénierie aquacole et cultivons nos terres avec une rigueur absolue.
@@ -162,43 +159,43 @@ export default function Home() {
           <span className="farm-sub-tag">MOAYE SERVICE MULTISERVICES</span>
         </div>
 
-        {/* BLOC 1 : NOTRE IDENTITÉ (Image à GAUCHE, Texte à DROITE) */}
-        
-        <div className="farm-flex-container mb-24">
-          <div className="farm-right-image">
-            <img src={yaSimeonImg} alt="M. Ya Esse Simeon - Moaye Service" className="farm-pic-style" />
-          </div>
-           <div className="farm-left-content">
-           <h3>Notre Approche Prestation</h3>
+        {/* BLOC 1 : NOTRE IDENTITÉ (Image à GAUCHE, Texte à DROITE sur ordinateur) */}
+        <div className="farm-flex-container mb-24 row-reverse-desktop reveal-element">
+          <div className="farm-left-content">
+            <h3>Notre Approche Prestation</h3>
             <p>
               Sous la direction stratégique de <strong>M. Ya Esse Simeon</strong>, Moaye Service s'impose comme un acteur majeur du développement rural en Côte d'Ivoire. Nous fusionnons l'ingénierie agropastorale moderne et les réalités du terrain pour concevoir des structures viables, performantes et créatrices de valeur pour toutes les communautés rurales.
             </p>
-             <Link to="/notre-vision" className="farm-link-btn">
+            {/* ⚡ LA NAVIGATION EST DÉSORMAIS COORDONNÉE AVEC L'URL EN MINUSCULES */}
+            <button onClick={() => navigate('/notre-vision')} className="farm-link-btn btn-vision-target" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
               Découvrir notre vision ➔
-          </Link>
+            </button>
           </div>
-           
+          
+          <div className="farm-right-image">
+            <img src={yaSimeonImg} alt="M. Ya Esse Simeon - Moaye Service" className="farm-pic-style" />
+          </div>
         </div>
 
-        {/* BLOC 2 : NOTRE MÉTHODOLOGIE (Texte à GAUCHE, Image à DROITE) */}
-        <div className="farm-flex-container">
+        {/* BLOC 2 : NOTRE MÉTHODOLOGIE (Texte à GAUCHE, Image à DROITE sur ordinateur) */}
+        <div className="farm-flex-container reveal-element">
           <div className="farm-left-content">
             <h3>Rigueur et Gestion de Projet</h3>
             <p>
               La réussite de vos infrastructures repose sur un processus de suivi technique et opérationnel millimétré. Qu'il s'agisse de bâtiments scolaires ou administratifs conformes aux exigences de type <strong>PAPSE</strong>, notre bureau d'études valide des plannings prévisionnels stricts (Gantt) et soumet des rapports d'étape réguliers.
             </p>
-           <Link to="/nos-engagements" className="farm-link-btn">
-         Consulter nos engagements ➔
-         </Link>
-
-
+            {/* ⚡ LA NAVIGATION EST DÉSORMAIS COORDONNÉE AVEC L'URL EN MINUSCULES */}
+            <button onClick={() => navigate('/nos-engagements')} className="farm-link-btn btn-engagements-target" style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+              Consulter nos engagements ➔
+            </button>
           </div>
+          
           <div className="farm-right-image">
             <img src={travail1Img} alt="Élevage Avicole Moaye Service" className="farm-pic-style" />
           </div>
         </div>
       </section>
-        
+
         {/* ===================================================
          SECTION 3 : NOS DOMAINES D'EXPERTISE (JSX EXACT)
          =================================================== */}
@@ -239,9 +236,9 @@ export default function Home() {
           </div>
 
         </div>
-      </section>
+      </section> 
 
-
+       
 
              {/* ===================================================
          5. SECTION : NOS PROJETS RÉALISÉS (MIS À JOUR)

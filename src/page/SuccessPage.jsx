@@ -9,12 +9,10 @@ export default function SuccessPage() {
     <div className="success-page-wrapper">
       <div className="success-main-card">
         
-        {/* ICÔNE DE VALIDATION EMBLÉMATIQUE */}
         <div className="success-icon-circle">
           ✅
         </div>
 
-        {/* MESSAGES DE CONFIRMATION OFFICIELS ET AMÉLIORÉS */}
         <div className="success-text-zone">
           <span className="success-meta-tag">Transmission Réussie</span>
           <h2>Votre demande a été enregistrée</h2>
@@ -35,7 +33,6 @@ export default function SuccessPage() {
           </div>
         </div>
 
-        {/* BOUTON INTERACTIF DE RETOUR ACCUEIL SANS EFFET CRÈME */}
         <div className="success-action-footer">
           <button className="success-home-btn" onClick={() => navigate('/')}>
             ← Retourner à la page d'accueil

@@ -1,103 +1,218 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Briefcase, ShieldCheck, FileText, LogOut, Plus, Download, Send, Wallet } from 'lucide-react';
 import './EspaceClient.css';
 
 export default function EspaceClient() {
   const navigate = useNavigate();
+  const [profil, setProfil] = useState(null);
+  const [erreur, setErreur] = useState('');
   
-  // Solution : On charge d'abord la mémoire locale pour éviter l'écran blanc au rechargement
-  const [client, setClient] = useState(() => {
-    const sauvegarde = localStorage.getItem('moaye_profil_complet');
-    return sauvegarde ? JSON.parse(sauvegarde) : { nom: "Koffi", type: "Producteur / Éleveur", vill: "TOUMODI", tel: "+225 05 65 64 08 06", date: "31/07/2026" };
-  });
+  // Extraction de l'adresse e-mail enregistrée dans la session locale
+  const emailConnecte = localStorage.getItem('client_email');
 
-  const [commandes, setCommandes] = useState([
-    { id: "MY-2026-01", axe: "🐣 Génie Avicole", detail: "Installation bâtiment technique de 10 000 pondeuses", budget: "8 500 000 F CFA", statut: "En cours d'exécution", statusCode: "in-progress", progression: 65, etape: "Gros Œuvre & Maçonnerie" },
-    { id: "MY-2026-02", axe: "🏗️ BTP & Génie Civil", detail: "Construction d'un magasin de stockage de provende", budget: "4 200 000 F CFA", statut: "Validé & Chiffré", statusCode: "validated", progression: 30, etape: "Fondations & Implantation" }
-  ]);
-
-  const [livrables] = useState([
-    { id: 1, nom: "Business_Plan_Rentabilite_Pondeuses_Signe.pdf", path: "/docs/business_plan.pdf" },
-    { id: 2, nom: "Plan_Architectural_Entrepot_BTP_Certifie.pdf", path: "/docs/plan_architectural.pdf" }
-  ]);
-  
-  const [message, setMessage] = useState('');
-  const [chatMessages, setChatMessages] = useState([
-    { id: 1, sender: 'bureau', text: "Bonjour, comment pouvons-nous vous aider aujourd'hui ?", time: "10:30" }
-  ]);
-
-  // Synchronisation automatique si les données changent
   useEffect(() => {
-    const profilStocke = localStorage.getItem('moaye_profil_complet');
-    if (profilStocke) {
-      const data = JSON.parse(profilStocke);
-      setClient(data);
+    if (!emailConnecte) {
+      setErreur("Aucun utilisateur connecté. Veuillez vous identifier.");
+      return;
     }
-  }, []);
 
-  const handleDeconnexion = () => { localStorage.clear(); navigate('/'); window.location.reload(); };
+    // Extraction des informations en temps réel depuis PostgreSQL Cloud Supabase
+    fetch(`http://localhost:5000/api/client/profil?email=${encodeURIComponent(emailConnecte)}`)
+      .then(res => res.json())
+      .then(resData => {
+        if (resData.success && resData.data) {
+          const rawData = Array.isArray(resData.data) ? resData.data[0] : resData.data;
+          
+          if (!rawData) {
+            setErreur("Profil introuvable dans la base cloud.");
+            return;
+          }
 
-  const handleSendMessage = (e) => {
-    e.preventDefault(); if (!message.trim()) return;
-    setChatMessages([...chatMessages, { id: Date.now(), sender: 'client', text: message, time: "Maintenant" }]);
-    setMessage('');
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, { id: Date.now() + 1, sender: 'bureau', text: "Message reçu par notre ingénieur de zone.", time: "Maintenant" }]);
-    }, 1000);
+          // Lecture des informations du dernier devis si présentes en mémoire locale
+          const devisLocalPole = localStorage.getItem('moaye_dernier_devis_pole');
+          const devisLocalCapacite = localStorage.getItem('moaye_dernier_devis_capacite');
+
+          // Alignement précis des clés de la table Supabase vers l'état Frontend
+          setProfil({
+            clientName: rawData.full_name || "Client Moaye Service",
+            phone: rawData.phone || "+225 00 00 00 00 00",
+            projectType: rawData.client_type || "Producteur / Éleveur",
+            email: rawData.email || emailConnecte,
+            location: rawData.location || "Non renseignée",
+            
+            // Affiche dynamiquement les caractéristiques de l'étude de devis soumis
+            sector: devisLocalPole || rawData.sector || "Non spécifié",
+            projectSize: devisLocalCapacite || rawData.project_size || "En attente d'étude technique"
+          });
+        } else {
+          setErreur("Profil introuvable.");
+        }
+      })
+      .catch(() => {
+        // Mode Fallback de secours autonome pour vos tests locaux si l'API est coupée
+        const devisLocalPole = localStorage.getItem('moaye_dernier_devis_pole');
+        const devisLocalCapacite = localStorage.getItem('moaye_dernier_devis_capacite');
+
+        setProfil({
+          clientName: "Koffi Michael (Mode Test)",
+          phone: "+225 05 65 65 46",
+          projectType: "Producteur / Éleveur",
+          email: emailConnecte || "ngorankoffimichael16@gmail.com",
+          location: "TOUMODI",
+          sector: devisLocalPole || "Nutrition",
+          projectSize: devisLocalCapacite || "12 Hectares / Sujets"
+        });
+      });
+  }, [emailConnecte]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('session_moaye_client');
+    localStorage.removeItem('client_email');
+    localStorage.removeItem('moaye_profil_complet');
+    localStorage.removeItem('moaye_dernier_devis_pole');
+    localStorage.removeItem('moaye_dernier_devis_capacite');
+    navigate('/connexion'); // Routage instantané sans rechargement forcé
   };
 
+  if (erreur) {
+    return (
+      <div className="client-error-box">
+        <h3>⚠️ {erreur}</h3>
+        <button onClick={() => navigate('/connexion')} className="client-retry-btn">Se connecter</button>
+      </div>
+    );
+  }
+
+  if (!profil) return <div className="client-loading-txt">Chargement de votre Tableau de Bord Numérique...</div>;
+
   return (
-    <div className="client-dashboard-wrapper"><div className="client-dashboard-container">
+    <div className="client-dashboard-wrapper">
+      
+      {/* 1. L'EN-TÊTE PROFESSIONNEL */}
       <header className="dashboard-header-line">
         <div className="dashboard-welcome-txt">
-          <span className="dashboard-badge-status"><ShieldCheck size={12} /> COMPTE ACTIF</span>
-          <h2>Espace Client — <span className="client-name-highlight">{client.nom}</span></h2>
-          <p className="dashboard-sub"><strong>{client.type}</strong> ● <strong>{client.vill}</strong></p>
+          <span className="dashboard-badge-status">ESPACE PRO CONFORMÉ — MOAYE SERVICE</span>
+          <h2>Mon Espace Client</h2>
+          <p className="dashboard-sub">Direction Générale : <strong>Ya Essé Siméon</strong></p>
         </div>
-        <button className="dashboard-logout-btn" onClick={handleDeconnexion}><LogOut size={16} /> Déconnexion</button>
+        <button onClick={handleLogout} className="dashboard-logout-btn">Déconnexion</button>
       </header>
 
-      <div className="dashboard-stats-grid">
-        <div className="stat-compact-card"><Briefcase size={20} /><div className="stat-card-texts"><span>{commandes.length} Projets</span><p>Fiches actives</p></div></div>
-        <div className="stat-compact-card"><Wallet size={20} /><div className="stat-card-texts"><span>Suivi Budget</span><p>Chiffrages Moaye</p></div></div>
-        <div className="stat-compact-card"><FileText size={20} /><div className="stat-card-texts"><span>Contact</span><p>{client.tel}</p></div></div>
-      </div>
+      {/* 2. GRILLE DEUX PAR DEUX (OCCUPE TOUT L'ESPACE) */}
+      <div className="dashboard-main-grid">
+        
+        {/* BLOC A : FICHE DE PROFIL ACCORDEE */}
+        <div className="dashboard-card profile-border">
+          <h3>Fiche Technique & Profil</h3>
+          <div className="dashboard-list-fields">
+            <p><strong>Nom du Promoteur :</strong> <span>{profil.clientName}</span></p>
+            <p><strong>Contact Téléphone :</strong> <span>{profil.phone}</span></p>
+            <p><strong>Type de compte :</strong> <span className="account-type-badge">{profil.projectType}</span></p>
+            <p><strong>Adresse E-mail :</strong> <span>{profil.email}</span></p>
+          </div>
+        </div>
 
-      <div className="dashboard-orders-section">
-        <div className="orders-section-header"><h3>Avancement des infrastructures</h3><button onClick={() => navigate('/demande-devis')}><Plus size={16} /> Nouveau projet</button></div>
-        <div className="moaye-orders-cards-list">{commandes.map((cmd) => (
-          <div key={cmd.id} className="moaye-order-item-card">
-            <div className="order-card-main-row">
-              <div className="order-info-block"><span>{cmd.id}</span><h4>{cmd.axe}</h4><p>{cmd.detail}</p></div>
-              <div className="order-financial-block"><span>Budget</span><strong>{cmd.budget}</strong></div>
-              <div className="order-status-block"><span className={`status-pill-badge status-${cmd.statusCode}`}>{cmd.statut}</span></div>
+        {/* BLOC B : ETUDE DU CAHIER DES CHARGES */}
+        <div className="dashboard-card project-border">
+          <h3>🌱 Suivi Opérationnel du Projet</h3>
+          <div className="dashboard-list-fields">
+            <div className="sub-follow-row">
+              <strong>Identifiant Unique :</strong>
+              <span>MY-2026-01 (Dossier Reçu)</span>
             </div>
-            <div className="order-card-progress-zone"><div className="progress-text-line"><span>Étape : {cmd.etape}</span><span>{cmd.progression}%</span></div>
-            <div className="progress-bar-track"><div className="progress-bar-fill" style={{ width: `${cmd.progression}%` }}></div></div></div>
+            <div className="sub-follow-row">
+              <strong>Pôle Technique Demandé :</strong>
+              <span className="text-dark-green">{profil.sector}</span>
+            </div>
+            <div className="sub-follow-row">
+              <strong>Capacité / Dimension :</strong>
+              <span className="text-bold-size">{profil.projectSize}</span>
+            </div>
+            <div className="sub-follow-row">
+              <strong>Localisation Exploitation :</strong>
+              <span>{profil.location}</span>
+            </div>
+            <div className="client-status-alert-box">
+              <strong>Étape actuelle :</strong> <span className="orange-status-highlight">Analyse terrain & Faisabilité</span>
+            </div>
           </div>
-        ))}</div>
-      </div>
-
-      <div className="dashboard-twocolumn-grid">
-        <div className="dashboard-docs-section">
-          <h3>Livrables & Certifications</h3>
-          <div className="dashboard-docs-list">{livrables.map((doc) => (
-            <div key={doc.id} className="document-download-row"><span>{doc.nom}</span><a href={doc.path} download={doc.nom} className="doc-download-btn"><Download size={14} /> PDF</a></div>
-          ))}</div>
         </div>
 
-        <div className="dashboard-support-section">
-          <h3>Liaison Bureau d'Études</h3>
-          <div className="moaye-chat-box" style={{height: "120px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "5px", padding: "10px", background: "#f1f5f9"}}>
-            {chatMessages.map(msg => <div key={msg.id} style={{alignSelf: msg.sender === 'client' ? 'flex-end' : 'flex-start', background: msg.sender === 'client' ? '#114314' : '#cbd5e1', color: msg.sender === 'client' ? 'white' : 'black', padding: '6px', borderRadius: '6px', fontSize: '12px'}}>{msg.text}</div>)}
+        {/* BLOC C : ETAT DE PRODUCTION AGROPASTORALE */}
+        <div className="dashboard-card history-border">
+          <h3>📊 Suivi Zootechnique des Productions</h3>
+          <div className="dashboard-list-fields">
+            <div className="data-text-block">
+              <strong>Poulets de chair :</strong> <span className="green-txt">1 500 Sujets — En provenderie</span>
+            </div>
+            <div className="data-text-block">
+              <strong>Maraîcher :</strong> <span className="brown-txt">Lopin Maraîcher — Récolte imminente</span>
+            </div>
+            <div className="data-text-block">
+              <strong>Aquaculture :</strong> <span className="blue-txt">Bassins RAS — Calibrage technique</span>
+            </div>
+
+            {/* LA JAUGE GRAPHIQUE À 35% */}
+            <div className="client-progress-wrapper">
+              <div className="progress-labels-row">
+                <span>Avancement global des travaux</span>
+                <strong>35%</strong>
+              </div>
+              <div className="client-progress-bar-track">
+                <div className="client-progress-bar-fill"></div>
+              </div>
+            </div>
           </div>
-          <form onSubmit={handleSendMessage} className="support-form-box">
-            <input type="text" placeholder="Posez votre question..." value={message} onChange={(e) => setMessage(e.target.value)} required />
-            <button type="submit"><Send size={14} /></button>
-          </form>
+        </div>
+
+        {/* BLOC D : LIVRABLES D'INGÉNIERIE (PDF) */}
+        <div className="dashboard-card docs-border">
+          <h3>📂 Livrables Officiels & Certifications (PDF)</h3>
+          <p className="docs-desc-helper">Consultez vos rapports d'assistance, vos Business Plans et vos factures proforma certifiés.</p>
+          <div className="dashboard-list-fields">
+            <div className="doc-download-item">
+              <span>🧾 Facture_Proforma_Infrastructures_Signee.pdf</span>
+              <button className="mini-download-btn" onClick={() => alert('Ouverture du fichier sécurisé Cloud Supabase...')}>Télécharger</button>
+            </div>
+            <div className="doc-download-item">
+              <span>📊 Business_Plan_Rentabilite_Certifie.pdf</span>
+              <button className="mini-download-btn" onClick={() => alert('Ouverture du fichier sécurisé Cloud Supabase...')}>Télécharger</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* 3. SECTION SERVICES EN LIGNE ACCESSIBLES */}
+      <div className="services-online-section">
+        <h3>🛒 Services en Ligne Disponibles</h3>
+        <div className="services-action-grid">
+          
+          <div className="action-box">
+            <h4>Commander des Produits</h4>
+            <p>Sélectionner des produits frais de la ferme (volailles, maraîchers, poissons bio) ou engager une étude d'envergure.</p>
+            <div className="action-buttons-group">
+              <button className="primary-action-btn" onClick={() => navigate('/catalogue-commandes')}>Sélectionner des produits frais</button>
+              <button className="secondary-action-btn" onClick={() => navigate('/demande-devis')}>Valider un devis d'expertise</button>
+            </div>
+          </div>
+
+          <div className="action-box">
+            <h4>Support & Logistique</h4>
+            <p>Entrez en contact de messagerie direct avec la direction générale de Toumodi.</p>
+            <div className="action-buttons-group">
+              <a href="https://wa.me." target="_blank" rel="noopener noreferrer" className="whatsapp-action-btn">
+                💬 Message direct au manager
+              </a>
+              <button className="secondary-action-btn" onClick={() => alert('Ouverture du planning de livraison Moaye...')}>
+                📅 Consulter les plannings de livraison
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
-    </div></div>
+
+    </div>
   );
 }
