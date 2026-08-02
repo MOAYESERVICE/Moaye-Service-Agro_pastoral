@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
-// 🌟 CONFIGURATION DYNAMIQUE CLOUD AUTOMATIQUE : Aligné sur votre tunnel ngrok actif
+// 🌟 CORRECTIF CLOUD IMPÉRATIF : Remise en place de votre URL ngrok active
 const API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://ngrok-free.dev';
+  : 'https://unstirred-flop-primp.ngrok-free.dev';
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -41,10 +41,12 @@ export default function Auth() {
 
     try {
       if (mode === 'register') {
-        // ☁️ Envoi sécurisé via la variable API globale
         const response = await fetch(`${API_URL}/api/auth/register`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' // 🌟 SAUTE L'AVERTISSEMENT MOBILE
+          },
           body: JSON.stringify({
             fullName: form.nom,
             clientType: form.type,
@@ -67,10 +69,12 @@ export default function Auth() {
         }
 
       } else {
-        // ☁️ Connexion sécurisée via la variable API globale
         const response = await fetch(`${API_URL}/api/auth/login`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' // 🌟 SAUTE L'AVERTISSEMENT MOBILE
+          },
           body: JSON.stringify({ email: form.email, password: form.codeSecret })
         });
 
@@ -91,7 +95,7 @@ export default function Auth() {
   return (
     <div className="auth-page-container">
       <div className="auth-card-box" style={{ maxWidth: mode === 'register' ? '600px' : '420px' }}>
-
+        <button className="btn-back-home" onClick={() => navigate('/')}>← Retour</button>
         <h2>{mode === 'login' ? 'Espace Connexion' : 'Créer un compte'}</h2>
         <p className="auth-subtitle">Moaye Service — Plateforme Agropastorale & BTP</p>
 
