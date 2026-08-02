@@ -1,3 +1,6 @@
+/* ===================================================
+   CHARTE DE DESIGN - FORMULAIRE DEMANDE DE DEVIS
+   =================================================== */
 .devis-page-container {
   min-height: 100vh;
   background-color: #fcfbfa;
@@ -19,7 +22,7 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.01);
 }
 
-/* --- STYLISATION DU TITRE RÉINTRODUIT --- */
+/* --- STYLISATION DU TITRE --- */
 .devis-luxury-header {
   text-align: left !important;
   margin-bottom: 1.5rem;
@@ -90,7 +93,7 @@
 }
 .devis-input-group input:focus { border-color: #114314; }
 
-/* 🟢 LA GRILLE DES 4 CARTES COMPACTES COLLÉES AU CORDEAU */
+/* 🟢 LA GRILLE DES CARTES D'OPTIONS */
 .devis-options-cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* 2 colonnes x 2 lignes sur PC */
@@ -153,7 +156,69 @@
 }
 .btn-devis-submit:hover { background-color: #0b2d0d; }
 
+/* ===================================================
+   RESPONSIVE SMARTPHONE (REPLI VERTICAL & TEXTES IMPOSANTS)
+   =================================================== */
 @media (max-width: 768px) {
-  .devis-form-card { padding: 1.5rem; }
-  .devis-two-columns-grid, .devis-options-cards-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .devis-form-card { 
+    padding: 2.2rem 1.2rem !important; 
+    width: 94% !important;
+    margin: 15px auto !important;
+  }
+  
+  /* 🌟 CORRECTION DE LISIBILITÉ : Titre de devis imposant */
+  .devis-luxury-header h2 {
+    font-size: 2rem !important;
+    font-weight: 800 !important;
+  }
+
+  .devis-top-intro-txt {
+    font-size: 1.05rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 🌟 CORRECTION DE LISIBILITÉ : Libellés agrandis et épaissis */
+  .devis-input-group label,
+  .devis-main-section-label {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #1a202c !important;
+    margin-bottom: 0.4rem !important;
+  }
+
+  /* Inputs épaissis au format tactile */
+  .devis-input-group input {
+    font-size: 1.1rem !important;
+    padding: 14px 16px !important;
+    border-radius: 8px !important;
+  }
+
+  /* Repli en une colonne des inputs et des options radios */
+  .devis-two-columns-grid, 
+  .devis-options-cards-grid { 
+    grid-template-columns: 1fr !important; 
+    gap: 1.2rem !important; 
+  }
+
+  /* Options radios plus spacieuses pour le pouce */
+  .moaye-radio-box-item {
+    padding: 16px !important;
+    border-radius: 10px !important;
+  }
+
+  .radio-text-wrapper strong {
+    font-size: 1.1rem !important;
+  }
+
+  .radio-text-wrapper p {
+    font-size: 0.88rem !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Grand bouton d'envoi */
+  .btn-devis-submit {
+    padding: 16px !important;
+    font-size: 1.1rem !important;
+    border-radius: 8px !important;
+  }
 }

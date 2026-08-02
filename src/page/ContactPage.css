@@ -191,17 +191,72 @@
 }
 
 /* ===================================================
-   RESPONSIVE SMARTPHONE (REPLI EN 1 SEULE COLONNE)
+   RESPONSIVE SMARTPHONE (REPLI EN 1 SEULE COLONNE ET LOGIQUE DE TEXTE IMPOSANT)
    =================================================== */
 @media (max-width: 768px) {
-  .moaye-contact-wrapper { padding: 2rem 1rem !important; }
-  .moaye-contact-card { padding: 2.5rem 1.5rem !important; }
-  .moaye-form-row { flex-direction: column !important; gap: 1.4rem !important; }
-  .moaye-contact-intro h2 { font-size: 1.8rem !important; }
+  .moaye-contact-wrapper { 
+    padding: 1.5rem 0.8rem !important; 
+  }
+  
+  .moaye-contact-card { 
+    padding: 2.2rem 1.2rem !important; 
+  }
+  
+  .moaye-form-row { 
+    flex-direction: column !important; 
+    gap: 1.4rem !important; 
+  }
+  
+  /* 🌟 CORRECTION DE LISIBILITÉ : Titre de l'étude agrandi */
+  .moaye-contact-intro h2 { 
+    font-size: 2rem !important; 
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+  }
+
+  .moaye-contact-intro p {
+    font-size: 1.05rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 🌟 CORRECTION DE LISIBILITÉ : Libellés des formulaires épaissis et lisibles */
+  .moaye-input-container label {
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: #163321 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Inputs de saisie plus grands au clavier */
+  .moaye-input-container input,
+  .moaye-input-container textarea {
+    font-size: 1.1rem !important;
+    padding: 14px 16px !important;
+    border-radius: 8px !important;
+  }
 
   /* Force les cartes d'expertises à s'empiler à la verticale sur téléphone */
   .moaye-expertises-grid-selector {
     grid-template-columns: 1fr !important;
     gap: 0.8rem !important;
+  }
+
+  /* Cartes de choix plus grandes */
+  .moaye-select-option-card {
+    padding: 14px 16px !important;
+  }
+
+  .moaye-card-select-texts h4 {
+    font-size: 1.1rem !important;
+  }
+
+  .moaye-card-select-texts p {
+    font-size: 0.85rem !important;
+  }
+
+  /* Grand bouton vert */
+  .moaye-submit-project-btn {
+    padding: 15px !important;
+    font-size: 1.1rem !important;
   }
 }
