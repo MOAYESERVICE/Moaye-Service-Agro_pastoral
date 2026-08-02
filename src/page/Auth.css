@@ -1,34 +1,263 @@
-.auth-page-container { min-height: 100vh; background: #fcfbfa; display: flex; align-items: center; justify-content: center; font-family: sans-serif; padding: 1rem; box-sizing: border-box; }
-.auth-card-box { background: #ffffff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); width: 100%; border-top: 4px solid #114314; box-sizing: border-box; transition: max-width 0.2s; }
-.btn-back-home { background: none; border: none; color: #114314; font-weight: bold; cursor: pointer; margin-bottom: 1rem; padding: 0; }
-.auth-card-box h2 { color: #114314; margin: 0 0 0.3rem 0; font-size: 1.5rem; }
-.auth-subtitle { color: #666; font-size: 0.85rem; margin-bottom: 1.5rem; }
-.auth-input-group { margin-bottom: 1rem; display: flex; flex-direction: column; text-align: left; }
-.auth-input-group label { font-size: 0.8rem; font-weight: bold; color: #333; margin-bottom: 0.4rem; }
-.auth-input-group input, .auth-input-group textarea { width: 100%; padding: 10px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 0.9rem; box-sizing: border-box; outline: none; }
-.auth-input-group input:focus, .auth-input-group textarea:focus { border-color: #114314; }
+/* ==========================================================================
+   VARIABLES ET CONFIGURATION DE BASE
+   ========================================================================== */
+.auth-page-container { 
+  min-height: 100vh; 
+  background: #fcfbfa; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  font-family: sans-serif; 
+  padding: 1.5rem 1rem; 
+  box-sizing: border-box; 
+}
 
-/* RADIOS EN 2 COLONNES */
-.auth-radio-custom-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; width: 100%; box-sizing: border-box; }
-.auth-radio-label-box { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; box-sizing: border-box; }
-.auth-radio-label-box input { position: absolute; opacity: 0; width: 0; height: 0; }
-.auth-radio-label-box::before { content: ""; min-width: 14px; height: 14px; border: 2px solid #cbd5e1; border-radius: 50%; display: inline-block; box-sizing: border-box; }
-.auth-radio-label-box span { font-size: 0.8rem; color: #333; }
-.auth-radio-label-box.checked { border-color: #114314; background: rgba(17,67,20,0.04); }
-.auth-radio-label-box.checked::before { border-color: #114314; background: #114314; box-shadow: inset 0 0 0 2px #fff; }
-.auth-radio-label-box.checked span { color: #114314; font-weight: bold; }
+.auth-card-box { 
+  background: #ffffff; 
+  padding: 2.2rem 2rem; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+  width: 100%; 
+  border-top: 4px solid #114314; 
+  box-sizing: border-box; 
+  transition: max-width 0.2s; 
+}
 
-/* PHONE & DROPDOWN VERS LE BAS LIMITÉ */
-.auth-phone-custom-container { display: flex; align-items: center; border: 1px solid #e0e0e0; border-radius: 6px; background: #fff; position: relative; }
-.auth-phone-prefix-trigger { display: flex; align-items: center; gap: 4px; padding: 10px; border-right: 1px solid #e2e8f0; cursor: pointer; background: #f8fafc; font-size: 0.85rem; border-radius: 5px 0 0 6px; }
-.auth-phone-custom-container input { border: none; padding: 10px; flex: 1; }
-.moaye-countries-card-dropdown { position: absolute; top: 100%; left: 0; width: 100%; max-height: 220px; overflow-y: auto; background: #fff; border: 1px solid #cbd5e1; border-radius: 6px; margin-top: 4px; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.08); box-sizing: border-box; }
-.moaye-country-option-row { display: flex; align-items: center; padding: 8px 12px; cursor: pointer; font-size: 0.85rem; }
-.moaye-country-option-row :nth-child(2) { flex: 1; text-align: left; margin-left: 8px; }
-.moaye-country-option-row:hover { background: rgba(17,67,20,0.05); }
+.btn-back-home { 
+  background: none; 
+  border: none; 
+  color: #114314; 
+  font-weight: bold; 
+  cursor: pointer; 
+  margin-bottom: 1rem; 
+  padding: 0; 
+  font-size: 1rem;
+}
 
-.btn-auth-main { width: 100%; background: #114314; color: #fff; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 1rem; text-transform: uppercase; }
-.auth-switch-link { font-size: 0.8rem; margin-top: 1rem; }
-.auth-switch-link span { color: #114314; font-weight: bold; cursor: pointer; text-decoration: underline; }
+.auth-card-box h2 { 
+  color: #114314; 
+  margin: 0 0 0.4rem 0; 
+  font-size: 1.7rem; 
+  font-weight: 800;
+}
 
-@media (max-width: 480px) { .auth-radio-custom-grid { grid-template-columns: 1fr; } }
+.auth-subtitle { 
+  color: #555555; 
+  font-size: 0.95rem; 
+  margin-bottom: 1.8rem; 
+  line-height: 1.4;
+}
+
+.auth-input-group { 
+  margin-bottom: 1.2rem; 
+  display: flex; 
+  flex-direction: column; 
+  text-align: left; 
+}
+
+.auth-input-group label { 
+  font-size: 0.95rem; 
+  font-weight: bold; 
+  color: #1a1a1a; 
+  margin-bottom: 0.5rem; 
+}
+
+.auth-input-group input, 
+.auth-input-group textarea { 
+  width: 100%; 
+  padding: 12px 14px; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 8px; 
+  font-size: 1.05rem; 
+  box-sizing: border-box; 
+  outline: none; 
+  color: #212121;
+}
+
+.auth-input-group input:focus, 
+.auth-input-group textarea:focus { 
+  border-color: #114314; 
+  box-shadow: 0 0 0 1px #114314;
+}
+
+/* ==========================================================================
+   RADIOS EN GRILLE ET TACTILE HAUT CONFORT
+   ========================================================================== */
+.auth-radio-custom-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 0.65rem; 
+  width: 100%; 
+  box-sizing: border-box; 
+}
+
+.auth-radio-label-box { 
+  background: #ffffff; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 8px; 
+  padding: 12px 14px; 
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  cursor: pointer; 
+  box-sizing: border-box; 
+  transition: all 0.15s ease;
+}
+
+.auth-radio-label-box input { 
+  position: absolute; 
+  opacity: 0; 
+  width: 0; 
+  height: 0; 
+}
+
+.auth-radio-label-box::before { 
+  content: ""; 
+  min-width: 16px; 
+  height: 16px; 
+  border: 2px solid #cbd5e1; 
+  border-radius: 50%; 
+  display: inline-block; 
+  box-sizing: border-box; 
+}
+
+.auth-radio-label-box span { 
+  font-size: 0.95rem; 
+  color: #333; 
+  font-weight: 500;
+}
+
+.auth-radio-label-box.checked { 
+  border-color: #114314; 
+  background: rgba(17,67,20,0.04); 
+}
+
+.auth-radio-label-box.checked::before { 
+  border-color: #114314; 
+  background: #114314; 
+  box-shadow: inset 0 0 0 2.5px #fff; 
+}
+
+.auth-radio-label-box.checked span { 
+  color: #114314; 
+  font-weight: bold; 
+}
+
+/* ==========================================================================
+   CONTENEUR NUMÉRO DE TÉLÉPHONE ET SÉLECTEUR DE PAYS
+   ========================================================================== */
+.auth-phone-custom-container { 
+  display: flex; 
+  align-items: center; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 8px; 
+  background: #fff; 
+  position: relative; 
+}
+
+.auth-phone-prefix-trigger { 
+  display: flex; 
+  align-items: center; 
+  gap: 6px; 
+  padding: 12px; 
+  border-right: 1px solid #cbd5e1; 
+  cursor: pointer; 
+  background: #f8fafc; 
+  font-size: 1rem; 
+  border-radius: 7px 0 0 7px; 
+}
+
+.auth-phone-custom-container input { 
+  border: none; 
+  padding: 12px; 
+  flex: 1; 
+  font-size: 1.05rem;
+}
+
+.moaye-countries-card-dropdown { 
+  position: absolute; 
+  top: 100%; 
+  left: 0; 
+  width: 100%; 
+  max-height: 220px; 
+  overflow-y: auto; 
+  background: #fff; 
+  border: 1px solid #cbd5e1; 
+  border-radius: 8px; 
+  margin-top: 6px; 
+  z-index: 999; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+  box-sizing: border-box; 
+}
+
+.moaye-country-option-row { 
+  display: flex; 
+  align-items: center; 
+  padding: 10px 14px; 
+  cursor: pointer; 
+  font-size: 0.95rem; 
+}
+
+.moaye-country-option-row :nth-child(2) { 
+  flex: 1; 
+  text-align: left; 
+  margin-left: 8px; 
+}
+
+.moaye-country-option-row:hover { 
+  background: rgba(17,67,20,0.05); 
+}
+
+/* ==========================================================================
+   BOUTONS DE SOUMISSION ET LIENS BAS DE PAGE
+   ========================================================================== */
+.btn-auth-main { 
+  width: 100%; 
+  background: #114314; 
+  color: #fff; 
+  border: none; 
+  padding: 14px; 
+  border-radius: 8px; 
+  font-weight: bold; 
+  font-size: 1.05rem;
+  cursor: pointer; 
+  margin-top: 1.2rem; 
+  text-transform: uppercase; 
+  letter-spacing: 0.5px;
+}
+
+.btn-auth-main:hover {
+  background: #1b5e20;
+}
+
+.auth-switch-link { 
+  font-size: 0.95rem; 
+  margin-top: 1.2rem; 
+  color: #444;
+}
+
+.auth-switch-link span { 
+  color: #114314; 
+  font-weight: bold; 
+  cursor: pointer; 
+  text-decoration: underline; 
+  margin-left: 4px;
+}
+
+/* ==========================================================================
+   LOGIQUE GRILLE ET ALIGNEMENTS SMARTPHONE
+   ========================================================================== */
+@media (max-width: 600px) {
+  .auth-card-box {
+    padding: 1.8rem 1.2rem;
+  }
+  
+  .auth-radio-custom-grid { 
+    grid-template-columns: 1fr; /* Empilement vertical des radios pour le confort mobile */
+    gap: 0.5rem;
+  }
+
+  .auth-radio-label-box {
+    padding: 14px; /* Rend les boutons radios plus hauts et faciles à presser au pouce */
+  }
+}
