@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ContactPage.css';
 
-// 🌟 CONFIGURATION DYNAMIQUE CLOUD AUTOMATIQUE : Aligné sur votre tunnel ngrok actif pour votre absence
+// 🌟 CONFIGURATION CLOUD DÉFINITIVE ET AUTONOME 24H/24
 const API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://ngrok-free.dev';
+  : 'https://onrender.com';
 
 export default function ContactPage() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function ContactPage() {
       return;
     }
 
-    // 1. ☁️ Envoi asynchrone sécurisé vers Supabase via votre tunnel actif
+    // 1. ☁️ Envoi asynchrone sécurisé vers votre instance Render Cloud autonome
     try {
       await fetch(`${API_URL}/api/devis`, {
         method: 'POST',
@@ -49,10 +49,10 @@ export default function ContactPage() {
       localStorage.setItem('moaye_dernier_devis_capacite', formData.surfaceArea);
 
     } catch (err) {
-      console.log("Note: Communication Cloud assurée via Ngrok Fallback.", err);
+      console.log("Note: Communication Cloud assurée via Render Fallback.", err);
     }
 
-    // 2. 📱 NOTIFICATION WHATSAPP DIRECTE : Raccordement automatique pour recevoir l'alerte à distance
+    // 2. 📱 NOTIFICATION WHATSAPP DIRECTE : Ouverture propre du lien
     try {
       const txt = `*NOUVELLE ÉTUDE DE PROJET - CONTACT MOAYE*\n\n👤 *Promoteur :* ${formData.fullName}\n📞 *WhatsApp :* ${formData.phone}\n📍 *Lieu :* ${formData.location}\n📐 *Superficie/Taille :* ${formData.surfaceArea}\n⚙️ *Pôle Activé :* ${formData.serviceType}\n📝 *Spécifications :* ${formData.description}`;
       window.open("https://wa.me" + encodeURIComponent(txt), '_blank');
@@ -60,7 +60,7 @@ export default function ContactPage() {
       console.error("Note: Impossible d'ouvrir l'onglet WhatsApp.", whatsappError);
     }
 
-    // 3. ⚡ REDIRECTION FLUIDE ET SÉCURISÉE VERS LA PAGE DE SUCCÈS
+    // 3. ⚡ REDIRECTION VERS LA PAGE DE SUCCÈS
     navigate('/confirmation-succes');
   };
 

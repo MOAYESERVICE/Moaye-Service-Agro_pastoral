@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EspaceClient.css';
 
-// 🌟 CONFIGURATION DYNAMIQUE CLOUD AUTOMATIQUE : Connecté à votre tunnel ngrok actif
+// 🌟 CONFIGURATION CLOUD DÉFINITIVE ET AUTONOME 24H/24
 const API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://ngrok-free.dev';
+  : 'https://onrender.com';
 
 export default function EspaceClient() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export default function EspaceClient() {
       return;
     }
 
-    // ☁️ Extraction des informations via la variable API globale (ngrok / localhost)
+    // ☁️ Extraction des informations via votre instance Render Cloud autonome
     fetch(`${API_URL}/api/client/profil?email=${encodeURIComponent(emailConnecte)}`)
       .then(res => res.json())
       .then(resData => {

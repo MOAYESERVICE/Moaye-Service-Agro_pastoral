@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css';
 
-// 🌟 CORRECTIF CLOUD IMPÉRATIF : Remise en place de votre URL ngrok active
+// 🌟 CONFIGURATION CLOUD DÉFINITIVE ET AUTONOME 24H/24
 const API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://unstirred-flop-primp.ngrok-free.dev';
+  : 'https://onrender.com';
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -44,8 +44,7 @@ export default function Auth() {
         const response = await fetch(`${API_URL}/api/auth/register`, {
           method: 'POST',
           headers: { 
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true' // 🌟 SAUTE L'AVERTISSEMENT MOBILE
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             fullName: form.nom,
@@ -72,8 +71,7 @@ export default function Auth() {
         const response = await fetch(`${API_URL}/api/auth/login`, {
           method: 'POST',
           headers: { 
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': 'true' // 🌟 SAUTE L'AVERTISSEMENT MOBILE
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({ email: form.email, password: form.codeSecret })
         });

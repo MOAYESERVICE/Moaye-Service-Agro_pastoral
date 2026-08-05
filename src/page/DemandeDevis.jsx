@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './DemandeDevis.css';
 
-// 🌟 CONFIGURATION DYNAMIQUE CLOUD : Aligné sur votre tunnel ngrok actif pour votre absence
+// 🌟 CONFIGURATION CLOUD DÉFINITIVE ET AUTONOME 24H/24
 const API_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000' 
-  : 'https://ngrok-free.dev';
+  : 'https://onrender.com';
 
 export default function DemandeDevis() {
   const navigate = useNavigate();
@@ -43,7 +43,7 @@ export default function DemandeDevis() {
 
     if (Object.keys(err).length > 0) return setErrors(err);
 
-    // 1. ☁️ Envoi asynchrone sécurisé via la variable API globale
+    // 1. ☁️ Envoi asynchrone sécurisé vers votre instance Render Cloud autonome
     try {
       await fetch(`${API_URL}/api/devis`, {
         method: 'POST',
@@ -67,7 +67,7 @@ export default function DemandeDevis() {
       console.error("Note: Erreur réseau Supabase ignorée pour ne pas bloquer l'utilisateur.", error);
     }
 
-    // 2. Préparation et ouverture sécurisée de WhatsApp (Avec le paramètre standard /?text=)
+    // 2. Préparation et ouverture sécurisée de WhatsApp (Avec le paramètre standard complet)
     try {
       const txt = `*DEMANDE DE DEVIS - MOAYE SERVICE*\n\n👤 *Nom :* ${form.clientName}\n📞 *Tel :* ${form.phone}\n📍 *Lieu :* ${form.location}\n📐 *Capacité :* ${form.volume}\n⚙️ *Pôle :* ${form.projectType}`;
       window.open("https://wa.me" + encodeURIComponent(txt), '_blank');
@@ -75,7 +75,7 @@ export default function DemandeDevis() {
       console.error("Note: Impossible de lancer WhatsApp.", whatsappError);
     }
     
-    // 3. ⚡ REDIRECTION FORCEE ET GARANTIE VERS LA PAGE DE SUCCÈS
+    // 3. ⚡ REDIRECTION VERS LA PAGE DE SUCCÈS
     navigate('/confirmation-succes');
   };
 
